@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import TechStrip from "@/components/TechStrip";
 import About from "@/components/About";
+import Portfolio from "@/components/Portfolio";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Services />
       <TechStrip />
       <About />
+      <Portfolio />
 
       {/* Placeholdery na kolejne fazy */}
       <section id="portfolio" className="py-24 border-t border-neutral-900 px-6 max-w-7xl mx-auto">
