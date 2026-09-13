@@ -1,0 +1,74 @@
+[
+  {
+    "id": "kalendarz-forum-bron-2018",
+    "title": "Kalendarz Forum Broni 2018",
+    "category": "calendar",
+    "image": "/portfolio/kalendarz-forum-bron-2018.webp"
+  },
+  {
+    "id": "kalendarz-forum-bron-2019",
+    "title": "Kalendarz Forum Broni 2019",
+    "category": "calendar",
+    "image": "/portfolio/kalendarz-forum-bron-2019.webp"
+  },
+  {
+    "id": "plakat-piknik-pszczelarski",
+    "title": "Plakat Piknik Pszczelarski 2018",
+    "category": "poster",
+    "image": "/portfolio/plakat-piknik-pszczelarski-2018.webp"
+  },
+  {
+    "id": "medal-nshm",
+    "title": "Medal Pamiątkowy NSHM",
+    "category": "coin",
+    "image": "/portfolio/medal-nshm.webp"
+  },
+  {
+    "id": "ulotka-kebab",
+    "title": "Ulotka Reklamowa Kebab",
+    "category": "flyer",
+    "image": "/portfolio/ulotka-kebab.webp"
+  },
+  {
+    "id": "miody-staropolskie",
+    "title": "Miody Staropolskie 2023",
+    "category": "logo",
+    "image": "/portfolio/miody-staropolskie-2023.webp"
+  },
+  {
+    "id": "shooting-team",
+    "title": "Shooting Team Branding",
+    "category": "sportswear",
+    "image": "/portfolio/shootinh-team.webp"
+  },
+  {
+    "id": "ceny-broni",
+    "title": "Ceny Broni Portal",
+    "category": "logo",
+    "image": "/portfolio/ceny-broni_gal.webp"
+  },
+  {
+    "id": "coin-project",
+    "title": "Moneta Pamiątkowa",
+    "category": "coin",
+    "image": "/portfolio/coin.webp"
+  },
+  {
+    "id": "mosaic",
+    "title": "Projekt Mozaika",
+    "category": "logo",
+    "image": "/portfolio/MOSAIC.webp"
+  },
+  {
+    "id": "pzp1",
+    "title": "Polski Związek Pszczelarski",
+    "category": "logo",
+    "image": "/portfolio/pzp1.webp"
+  },
+  {
+    "id": "master-file",
+    "title": "Master File Graphic Design",
+    "category": "poster",
+    "image": "/portfolio/master-file.webp"
+  }
+]

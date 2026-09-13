@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
+@theme {
+  --color-[#BE1522]: #BE1522;
+  --color-[#9e101b]: #9e101b;
+  --color-brand-red: #BE1522;
+  --color-brand-hover: #9e101b;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-red: #BE1522;
+  --brand-hover: #9e101b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Wymuszenie kolorów klasami pomocniczymi */
+.bg-brand {
+  background-color: #BE1522 !important;
+}
+.bg-brand:hover {
+  background-color: #9e101b !important;
+}
+.text-brand {
+  color: #BE1522 !important;
+}
+.hover\:text-brand:hover {
+  color: #BE1522 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #BE1522;
 }
