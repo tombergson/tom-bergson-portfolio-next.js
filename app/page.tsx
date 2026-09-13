@@ -5,6 +5,7 @@ import TechStrip from "@/components/TechStrip";
 import About from "@/components/About";
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -17,8 +18,35 @@ export default function Home() {
       <Portfolio />
       <Contact />
 
-      <footer className="py-8 border-t border-neutral-900 text-center text-sm text-neutral-500">
-        © {new Date().getFullYear()} Tom Bergson. All rights reserved.
+      <footer className="py-8 border-t border-neutral-900 text-center text-sm text-neutral-500 flex flex-col items-center justify-center gap-2">
+        <div className="flex items-center gap-2">
+          <span>Designed by</span>
+          <a 
+            href="https://tombergson.eu" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/favicon.ico"
+              alt="Logo"
+              width={18}
+              height={18}
+              className="w-[18px] h-[18px] rounded-sm object-contain scale-110"
+            />
+          </a>
+        </div>
+        <div>
+          © 2026 Copyright |{" "}
+          <a 
+            href="https://tombergson.eu" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-neutral-300 transition-colors"
+          >
+            tombergson.eu
+          </a>
+        </div>
       </footer>
     </main>
   );
