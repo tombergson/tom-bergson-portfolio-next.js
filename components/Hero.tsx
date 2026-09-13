@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import ParticlesBackground from "./ParticlesBackground";
 import AnimatedText from "./AnimatedText";
 
 export default function Hero() {
@@ -16,8 +17,11 @@ export default function Hero() {
         />
       </div>
 
-      {/* Lżejszy gradient overlay (grafika w tle mocniej widoczna) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black z-10" />
+      {/* Interaktywny efekt cząsteczek nad obrazkiem */}
+      <ParticlesBackground />
+
+      {/* Lżejszy gradient overlay dla zachowania czytelności tekstu */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black z-10 pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-6 text-center relative z-20">
         <h2 className="text-brand font-bold tracking-widest uppercase mb-4 text-xs md:text-sm drop-shadow-md">
@@ -26,8 +30,8 @@ export default function Hero() {
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
           Crafting Visual Identities & Digital Experiences
         </h1>
-        <p className="text-neutral-400 text-base md:text-xl max-w-2xl leading-relaxed mb-10 font-mono min-h-[4rem]">
-          <AnimatedText text="Specializing in premium graphic design, tactical branding systems, and modern web applications." />
+        <p className="text-neutral-400 text-base md:text-xl max-w-2xl leading-relaxed mb-10 font-mono min-h-[4rem] mx-auto">
+          <AnimatedText text="Specializing in premium graphic design, branding systems, and modern web applications." />
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
