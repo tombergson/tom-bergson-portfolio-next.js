@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-  --color-[#BE1522]: #BE1522;
-  --color-[#9e101b]: #9e101b;
-  --color-brand-red: #BE1522;
-  --color-brand-hover: #9e101b;
-}
-
 ::selection {
   background-color: #BE1522 !important;
   color: #ffffff !important;
@@ -20,6 +13,8 @@
 :root {
   --brand-red: #BE1522;
   --brand-hover: #9e101b;
+  --color-brand-red: #BE1522;
+  --color-brand-hover: #9e101b;
 }
 
 @layer base {
