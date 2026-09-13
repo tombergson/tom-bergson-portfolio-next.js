@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { X, Eye, ExternalLink } from "lucide-react";
+import { X, ExternalLink } from "lucide-react";
 
 type ProjectCategory = "all" | "calendar" | "poster" | "coin" | "sportswear" | "logo" | "web";
 
@@ -115,7 +115,7 @@ const projects: Project[] = [
   },
   {
     id: "11",
-    title: "Nadwiślańskie Stwarzyszenie Historii Militarnej - branding i serwis internetowy",
+    title: "Nadwiślańskie Stowarzyszenie Historii Militarnej - branding i serwis internetowy",
     categories: ["logo", "web"],
     categoryLabel: "Logo & Web",
     description: "Zestaw wektorowych zasobów graficznych, znaków towarowych oraz architektury serwisu WWW.",
@@ -136,13 +136,13 @@ const projects: Project[] = [
 ];
 
 const categories: { key: ProjectCategory; label: string }[] = [
-  { key: "all", label: "ALL" },
-  { key: "calendar", label: "CALENDAR" },
-  { key: "poster", label: "POSTER" },
-  { key: "coin", label: "COIN" },
-  { key: "sportswear", label: "SPORTSWEAR" },
-  { key: "logo", label: "LOGO" },
-  { key: "web", label: "WEB" },
+  { key: "all", label: "All" },
+  { key: "calendar", label: "Calendar" },
+  { key: "poster", label: "Poster" },
+  { key: "coin", label: "Coin" },
+  { key: "sportswear", label: "Sportswear" },
+  { key: "logo", label: "Logo" },
+  { key: "web", label: "Web" },
 ];
 
 export default function Portfolio() {
@@ -155,29 +155,29 @@ export default function Portfolio() {
       : projects.filter((p) => p.categories.includes(activeCategory));
 
   return (
-    <section id="portfolio" className="py-24 bg-[#050505] relative border-b border-neutral-900">
+    <section id="portfolio" className="py-20 bg-[#080808] relative border-b border-neutral-900/60">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Nagłówek sekcji */}
-        <div className="text-center mb-12">
-          <h2 className="text-brand font-bold tracking-widest uppercase text-xs md:text-sm mb-3">
+        <div className="text-center mb-10">
+          <span className="text-neutral-500 font-mono text-xs tracking-widest uppercase mb-2 block">
             Selected Work
-          </h2>
-          <h3 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+          </span>
+          <h3 className="text-2xl md:text-4xl font-semibold text-neutral-100 tracking-tight">
             Portfolio
           </h3>
         </div>
 
-        {/* Filtry kategorii */}
-        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-12">
+        {/* Subtelne filtry kategorii */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 mb-12">
           {categories.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
-              className={`px-5 py-2.5 rounded-lg text-xs md:text-sm font-bold tracking-wider uppercase transition-all duration-300 border ${
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
                 activeCategory === cat.key
-                  ? "bg-brand text-white border-brand shadow-lg shadow-brand/20"
-                  : "bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:text-white"
+                  ? "bg-neutral-100 text-neutral-950 border-neutral-100"
+                  : "bg-neutral-900/40 text-neutral-400 border-neutral-800/80 hover:border-neutral-700 hover:text-neutral-200"
               }`}
             >
               {cat.label}
@@ -186,51 +186,44 @@ export default function Portfolio() {
         </div>
 
         {/* Siatka projektów */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="group relative bg-neutral-950 border border-neutral-800/80 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-brand/50 hover:shadow-xl hover:shadow-brand/5 flex flex-col justify-between"
+              className="group relative bg-neutral-950/60 border border-neutral-900 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:border-neutral-800 flex flex-col justify-between"
             >
               <div>
                 {/* Podgląd obrazka */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-900">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-900/50">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-
-                  {/* Overlay przycisku podglądu */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-xs">
-                    <div className="p-3 rounded-full bg-brand text-white shadow-lg flex items-center gap-2 font-bold text-xs uppercase tracking-wider">
-                      <Eye className="w-4 h-4" /> View Project
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-300" />
                 </div>
 
                 {/* Informacje o projekcie */}
-                <div className="p-6">
-                  <span className="text-xs font-mono font-semibold text-brand tracking-wider uppercase mb-2 block">
+                <div className="p-5">
+                  <span className="text-[11px] font-mono text-neutral-500 tracking-wider uppercase mb-1.5 block">
                     {project.categoryLabel}
                   </span>
-                  <h4 className="text-xl font-bold text-white mb-2 group-hover:text-brand transition-colors">
+                  <h4 className="text-base font-medium text-neutral-200 mb-2 group-hover:text-white transition-colors leading-snug">
                     {project.title}
                   </h4>
-                  <p className="text-neutral-400 text-sm line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-neutral-400 text-xs line-clamp-2 leading-relaxed mb-4 font-normal">
                     {project.description}
                   </p>
 
                   {/* Tagi */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-2">
                     {project.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] font-mono bg-neutral-900 border border-neutral-800 text-neutral-300 px-2.5 py-1 rounded"
+                        className="text-[10px] font-mono bg-neutral-900/80 border border-neutral-800/60 text-neutral-400 px-2 py-0.5 rounded"
                       >
                         {tag}
                       </span>
@@ -239,17 +232,17 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Link w formie Chip */}
+              {/* Subtelny Chip Linku */}
               {project.link && (
-                <div className="px-6 pb-6 pt-0">
+                <div className="px-5 pb-5 pt-0">
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono bg-neutral-900 hover:bg-brand text-neutral-300 hover:text-white border border-neutral-800 transition-all duration-300"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-mono text-neutral-400 hover:text-white bg-neutral-900/60 hover:bg-neutral-800/80 px-2.5 py-1 rounded-md border border-neutral-800/80 transition-all duration-200"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-3 h-3 text-neutral-500" />
                     <span>{project.linkLabel || "Visit Site"}</span>
                   </a>
                 </div>
@@ -260,52 +253,52 @@ export default function Portfolio() {
 
       </div>
 
-      {/* Modal ze szczegółami projektu */}
+      {/* Subtelny Modal */}
       {selectedProject && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="relative w-full max-w-4xl bg-neutral-950 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+            className="relative w-full max-w-3xl bg-neutral-950 border border-neutral-800/90 rounded-xl overflow-hidden shadow-2xl max-h-[85vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Przycisk zamykania */}
             <button
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all"
+              className="absolute top-3 right-3 z-10 p-2 rounded-full bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white transition-all"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            {/* Obrazek w modalu */}
-            <div className="relative aspect-video w-full bg-neutral-900 shrink-0">
+            {/* Podgląd w modalu */}
+            <div className="relative aspect-video w-full bg-neutral-900/40 shrink-0">
               <Image
                 src={selectedProject.image}
                 alt={selectedProject.title}
                 fill
-                className="object-contain object-center"
+                className="object-contain object-center p-2"
               />
             </div>
 
             {/* Treść w modalu */}
-            <div className="p-6 md:p-8 overflow-y-auto">
-              <span className="text-xs font-mono font-semibold text-brand tracking-wider uppercase mb-2 block">
+            <div className="p-6 overflow-y-auto">
+              <span className="text-[11px] font-mono text-neutral-500 tracking-wider uppercase mb-1 block">
                 {selectedProject.categoryLabel}
               </span>
-              <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 {selectedProject.title}
               </h3>
-              <p className="text-neutral-300 text-sm md:text-base leading-relaxed mb-6">
+              <p className="text-neutral-300 text-sm leading-relaxed mb-6">
                 {selectedProject.description}
               </p>
 
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-neutral-900">
+                <div className="flex flex-wrap gap-1.5">
                   {selectedProject.tags.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="text-xs font-mono bg-neutral-900 border border-neutral-800 text-neutral-300 px-3 py-1 rounded-md"
+                      className="text-xs font-mono bg-neutral-900 text-neutral-400 px-2.5 py-1 rounded border border-neutral-800"
                     >
                       {tag}
                     </span>
@@ -317,9 +310,9 @@ export default function Portfolio() {
                     href={selectedProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-brand text-white font-mono font-semibold text-xs rounded-full hover:bg-red-700 transition-all shadow-md"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-neutral-100 hover:bg-white text-neutral-950 font-medium text-xs rounded-md transition-all"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                     <span>{selectedProject.linkLabel || "Visit Website"}</span>
                   </a>
                 )}
