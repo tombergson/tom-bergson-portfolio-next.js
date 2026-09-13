@@ -10,14 +10,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Tom Bergson | Graphic Design & Web Development",
   description: "Portfolio of Tom Bergson – Graphic Design, AI Solutions, and Modern Web Development.",
-  openGraph: {
-    title: "Tom Bergson | Graphic Design & Web Development",
-    description: "Graphic Design, AI Solutions, and Modern Web Development.",
-    url: "https://tombergson.eu",
-    siteName: "Tom Bergson",
-    locale: "en_US",
-    type: "website",
-  },
 };
 
 export default function RootLayout({
@@ -27,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans bg-neutral-950 text-neutral-100 antialiased selection:bg-amber-500 selection:text-neutral-950`}>
+      <body className={`${inter.variable} font-sans bg-neutral-950 text-neutral-100 antialiased selection:bg-[#BE1522] selection:text-white`}>
         {children}
       </body>
     </html>
