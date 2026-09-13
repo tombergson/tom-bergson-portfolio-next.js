@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import AnimatedText from "./AnimatedText";
 
 export default function Hero() {
   return (
@@ -25,8 +26,8 @@ export default function Hero() {
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
           Crafting Visual Identities & Digital Experiences
         </h1>
-        <p className="text-neutral-200 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
-          Specializing in premium graphic design, tactical branding systems, and modern web applications.
+        <p className="text-neutral-400 text-base md:text-xl max-w-2xl leading-relaxed mb-10 font-mono min-h-[4rem]">
+          <AnimatedText text="Specializing in premium graphic design, tactical branding systems, and modern web applications." />
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
