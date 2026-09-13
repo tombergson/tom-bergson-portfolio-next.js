@@ -37,12 +37,12 @@ export default function Header() {
           <Image
             src="/images/FB-logo-white_fill.webp"
             alt="Tom Bergson Logo"
-            width={140}
-            height={40}
+            width={180}
+            height={52}
             priority
-            className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
-          <span className="text-xl font-bold tracking-wider text-white">
+          <span className="text-2xl font-bold tracking-wider text-white">
             TOM<span className="text-brand">BERGSON</span>
           </span>
         </Link>

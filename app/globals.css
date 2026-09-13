@@ -7,6 +7,16 @@
   --color-brand-hover: #9e101b;
 }
 
+::selection {
+  background-color: #BE1522 !important;
+  color: #ffffff !important;
+}
+
+::-moz-selection {
+  background-color: #BE1522 !important;
+  color: #ffffff !important;
+}
+
 :root {
   --brand-red: #BE1522;
   --brand-hover: #9e101b;
@@ -18,7 +28,6 @@
   }
 }
 
-/* Wymuszenie kolorów klasami pomocniczymi */
 .bg-brand {
   background-color: #BE1522 !important;
 }

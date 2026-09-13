@@ -4,8 +4,8 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden bg-black">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0 opacity-65">
+      {/* Background Image - Rozjaśniony obrazek (opacity-85) */}
+      <div className="absolute inset-0 z-0 opacity-85">
         <Image
           src="/images/background.webp"
           alt="Hero background"
@@ -15,8 +15,8 @@ export default function Hero() {
         />
       </div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black z-10" />
+      {/* Lżejszy gradient overlay (grafika w tle mocniej widoczna) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black z-10" />
 
       <div className="max-w-4xl mx-auto px-6 text-center relative z-20">
         <h2 className="text-brand font-bold tracking-widest uppercase mb-4 text-xs md:text-sm drop-shadow-md">
@@ -25,14 +25,14 @@ export default function Hero() {
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
           Crafting Visual Identities & Digital Experiences
         </h1>
-        <p className="text-neutral-300 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-sm">
-          Specializing in military graphic design, branding systems, and modern web applications.
+        <p className="text-neutral-200 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
+          Specializing in premium graphic design, tactical branding systems, and modern web applications.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="#portfolio"
-            className="w-full sm:w-auto px-8 py-3.5 bg-brand text-white font-bold rounded-lg transition-all shadow-lg"
+            className="w-full sm:w-auto px-8 py-3.5 bg-brand text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-[#BE1522]/40"
           >
             View Portfolio
           </Link>
