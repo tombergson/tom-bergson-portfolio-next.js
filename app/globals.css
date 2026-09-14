@@ -1,20 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand: #BE1522;
+  --color-brand-hover: #9e101b;
+}
+
 ::selection {
-  background-color: #BE1522 !important;
-  color: #ffffff !important;
+  background-color: var(--color-brand);
+  color: #ffffff;
 }
 
 ::-moz-selection {
-  background-color: #BE1522 !important;
-  color: #ffffff !important;
-}
-
-:root {
-  --brand-red: #BE1522;
-  --brand-hover: #9e101b;
-  --color-brand-red: #BE1522;
-  --color-brand-hover: #9e101b;
+  background-color: var(--color-brand);
+  color: #ffffff;
 }
 
 @layer base {
@@ -23,17 +21,8 @@
   }
 }
 
-.bg-brand {
-  background-color: #BE1522 !important;
-}
 .bg-brand:hover {
-  background-color: #9e101b !important;
-}
-.text-brand {
-  color: #BE1522 !important;
-}
-.hover\:text-brand:hover {
-  color: #BE1522 !important;
+  background-color: var(--color-brand-hover);
 }
 
 /* Custom scrollbar */
@@ -48,7 +37,7 @@
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #BE1522;
+  background: var(--color-brand);
 }
 
 @keyframes marquee {

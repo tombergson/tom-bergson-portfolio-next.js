@@ -24,25 +24,40 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileMenuOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-black/90 backdrop-blur-md border-b border-neutral-800/80 py-4"
-          : "bg-transparent py-6"
+          ? "bg-black/90 backdrop-blur-md border-b border-neutral-800/80 py-3 md:py-4"
+          : "bg-transparent py-4 md:py-6"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <Link href="#home" className="flex items-center gap-3 group">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+        <Link href="#home" className="flex items-center gap-2 sm:gap-3 group min-w-0">
           <Image
             src="/images/FB-logo-white_fill.webp"
             alt="Tom Bergson Logo"
             width={180}
             height={52}
             priority
-            className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-9 sm:h-10 md:h-12 w-auto object-contain shrink-0 transition-transform duration-200 group-hover:scale-105"
           />
-          <span className="text-2xl font-bold tracking-wider text-white">
+          <span className="text-lg sm:text-xl md:text-2xl font-bold tracking-wider text-white truncate">
             TOM<span className="text-brand">BERGSON</span>
           </span>
         </Link>
@@ -63,8 +78,10 @@ export default function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-neutral-300 hover:text-white focus:outline-none p-2"
+          className="md:hidden text-neutral-300 hover:text-white focus:outline-none p-2 shrink-0"
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {mobileMenuOpen ? (
@@ -78,7 +95,10 @@ export default function Header() {
 
       {/* Mobile Nav Menu */}
       {mobileMenuOpen && (
-        <nav className="md:hidden bg-neutral-950 border-b border-neutral-800 px-6 py-4 space-y-4">
+        <nav
+          id="mobile-menu"
+          className="md:hidden bg-neutral-950 border-b border-neutral-800 px-6 py-4 space-y-4"
+        >
           {navItems.map((item) => (
             <Link
               key={item.name}
