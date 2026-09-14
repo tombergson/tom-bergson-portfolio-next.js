@@ -1,0 +1,73 @@
+name: Build and Push Staging
+
+on:
+  push:
+    branches: [ "staging" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: tombergson/tom-bergson-portfolio-next.js
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare tags
+        id: vars
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "DATE_TAG=$(date +'%Y-%m-%d_%H-%M')" >> $GITHUB_OUTPUT
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # KROK 1: Budowanie obrazu lokalnie zestandalone output dla Next.js
+      - name: Build image locally
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: smoke-test-image:latest
+
+      # KROK 2: Smoke Test (weryfikacja czy kontener Next.js wstaje)
+      - name: Verify Next.js (Smoke Test)
+        run: |
+          docker run -d --name test-container -p 3000:3000 smoke-test-image:latest
+          sleep 10
+          
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:3000)
+          echo "Next.js responded with status: $STATUS"
+          
+          if [ "$STATUS" -ne 200 ] && [ "$STATUS" -ne 302 ] && [ "$STATUS" -ne 404 ]; then
+            echo "❌ Smoke Test Failed: HTTP $STATUS"
+            docker logs test-container
+            docker stop test-container && docker rm test-container
+            exit 1
+          fi
+          
+          echo "✅ Smoke Test Passed!"
+          docker stop test-container && docker rm test-container
+
+      # KROK 3: Push do GHCR (jeśli test przeszedł pomyślnie)
+      - name: Push final image to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.SHORT_SHA }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.DATE_TAG }}
