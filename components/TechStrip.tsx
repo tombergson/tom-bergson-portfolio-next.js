@@ -4,13 +4,15 @@ const techStack = [
   { name: "Photoshop", icon: "/images/tech/photoshop.webp" },
   { name: "Illustrator", icon: "/images/tech/illustrator.webp" },
   { name: "InDesign", icon: "/images/tech/indesign.webp" },
-  { name: "HTML5", icon: "/images/tech/html5.webp" },
-  { name: "CSS3", icon: "/images/tech/css3.webp" },
+  { name: "HTML5", icon: "/images/tech/html5.webp"},
+  { name: "CSS3", icon: "/images/tech/css3.webp"},
   { name: "Python", icon: "/images/tech/python.webp" },
   { name: "Debian", icon: "/images/tech/debian.webp" },
   { name: "Drupal", icon: "/images/tech/drupal.webp", scale: "scale-150" },
   { name: "OpenAI", icon: "/images/tech/openai-logomark.webp", invert: true },
   { name: "Laravel", icon: "/images/tech/laravel.webp" },
+  { name: "Next.js", icon: "/images/tech/next-js.webp", invert: true, scale: "scale-170" },
+  { name: "React", icon: "/images/tech/react.webp"},
 ];
 
 export default function TechStrip() {
