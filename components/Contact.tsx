@@ -141,7 +141,7 @@ export default function Contact() {
                 
                 {/* Instagram */}
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/tombergsondesign/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
@@ -165,7 +165,7 @@ export default function Contact() {
 
                 {/* Facebook */}
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/tombergson.eu/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
@@ -187,7 +187,7 @@ export default function Contact() {
 
                 {/* Youtube */}
                 <a
-                  href="https://youtube.com"
+                  href="https://www.youtube.com/@TomBergson"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
