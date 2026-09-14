@@ -24,11 +24,11 @@ export async function POST(request: Request) {
       // @ts-ignore
       agent,
       body: JSON.stringify({
-        // TUTAJSZA ZMIANA: używamy zweryfikowanej domeny tombergson.eu
-        from: "Portfolio Contact <kontakt@tombergson.eu>",
+        
+        from: "Tom Bergson <studio@tombergson.eu>",
         to: [process.env.CONTACT_EMAIL_TO || "studio@tombergson.eu"],
         reply_to: email,
-        subject: `[Portfolio Contact] Nowa wiadomość od ${name}`,
+        subject: `[Tom Bergson] Nowa wiadomość od ${name}`,
         html: `
           <div style="font-family: sans-serif; padding: 20px; color: #111; line-height: 1.6;">
             <h2>Nowa wiadomość z formularza kontaktowego</h2>

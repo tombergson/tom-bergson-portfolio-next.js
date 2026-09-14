@@ -283,22 +283,22 @@ export default function Contact() {
                 )}
               </div>
 
-              {/* Komunikaty o stanie */}
+              {/* Status Messages */}
               {status === "success" && (
                 <div className="flex items-center gap-2 p-3 bg-emerald-950/50 border border-emerald-800/80 text-emerald-400 rounded-md text-xs font-mono">
                   <CheckCircle className="w-4 h-4 shrink-0" />
-                  <span>Dziękuję! Twoja wiadomość została pomyślnie wysłana.</span>
+                  <span>Thank you! Your message has been sent successfully.</span>
                 </div>
               )}
 
               {status === "error" && (
                 <div className="flex items-center gap-2 p-3 bg-red-950/50 border border-red-800/80 text-red-400 rounded-md text-xs font-mono">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{errorMessage || "Coś poszło nie tak. Spróbuj ponownie."}</span>
+                  <span>{errorMessage || "Something went wrong. Please try again."}</span>
                 </div>
               )}
 
-              {/* Przycisk wysyłki */}
+              {/* Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
