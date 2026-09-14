@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Cpu, Terminal, Sparkles, CheckCircle2 } from "lucide-react";
+import { Terminal, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function About() {
   return (
@@ -8,13 +8,13 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Kolumna lewa: Zdjęcie / Grafika profilowa */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative mb-10 lg:mb-0">
             <div className="relative w-full aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-950">
               <Image
                 src="/images/project.webp"
                 alt="Tom Bergson"
                 fill
-                className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-500"
+                className="object-cover object-center grayscale-0 md:grayscale md:hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
             </div>
