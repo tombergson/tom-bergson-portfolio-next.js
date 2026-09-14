@@ -5,7 +5,7 @@ import AnimatedText from "./AnimatedText";
 
 export default function Hero() {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden bg-black">
+    <section id="home" className="min-h-dvh flex items-center justify-center pt-20 relative overflow-hidden bg-black">
       {/* Background Image - Rozjaśniony obrazek (opacity-85) */}
       <div className="absolute inset-0 z-0 opacity-85">
         <Image
@@ -27,7 +27,7 @@ export default function Hero() {
         <h2 className="text-brand font-bold tracking-widest uppercase mb-4 text-xs md:text-sm drop-shadow-md">
           Graphic Design & Web Development
         </h2>
-        <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight drop-shadow-lg">
           Crafting Visual Identities & Digital Experiences
         </h1>
         <p className="text-neutral-400 text-base md:text-xl max-w-2xl leading-relaxed mb-10 font-mono min-h-[4rem] mx-auto">
@@ -37,7 +37,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="#portfolio"
-            className="w-full sm:w-auto px-8 py-3.5 bg-brand text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-[#BE1522]/40"
+            className="w-full sm:w-auto px-8 py-3.5 bg-brand text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-brand/40"
           >
             View Portfolio
           </Link>
