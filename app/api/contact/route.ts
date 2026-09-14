@@ -1,30 +1,56 @@
 import { NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations/contact";
-import https from "https";
-
-const agent = new https.Agent({
-  rejectUnauthorized: process.env.NODE_ENV === "production",
-});
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { turnstileToken, ...formData } = body;
 
-    // 1. Walidacja Zod
-    const validatedData = contactFormSchema.parse(body);
+    const isDev = process.env.NODE_ENV === "development";
+
+    // 1. Weryfikacja tokenu Cloudflare Turnstile
+    if (!turnstileToken && !isDev) {
+      return NextResponse.json(
+        { success: false, message: "Brak tokenu weryfikacji CAPTCHA." },
+        { status: 400 }
+      );
+    }
+
+    // W trybie deweloperskim używamy oficjalnego testowego secret key Cloudflare
+    const secretKey = isDev 
+      ? "2x0000000000000000000000000000000AA" 
+      : process.env.TURNSTILE_SECRET_KEY;
+
+    const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: secretKey || "",
+        response: turnstileToken || "test-token",
+      }),
+    });
+
+    const turnstileResult = await turnstileRes.json();
+
+    if (!turnstileResult.success && !isDev) {
+      return NextResponse.json(
+        { success: false, message: "Niepomyślna weryfikacja bezpieczeństwa (CAPTCHA)." },
+        { status: 400 }
+      );
+    }
+
+    // 2. Walidacja Zod dla danych formularza
+    const validatedData = contactFormSchema.parse(formData);
     const { name, email, message } = validatedData;
 
-    // 2. Wywołanie Resend API
+    // 3. Wywołanie Resend API
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
       },
-      // @ts-ignore
-      agent,
       body: JSON.stringify({
-        
         from: "Tom Bergson <studio@tombergson.eu>",
         to: [process.env.CONTACT_EMAIL_TO || "studio@tombergson.eu"],
         reply_to: email,
