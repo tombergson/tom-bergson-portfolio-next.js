@@ -9,22 +9,31 @@ interface AnimatedTextProps {
 
 export default function AnimatedText({ text, speed = 40 }: AnimatedTextProps) {
   const [displayedText, setDisplayedText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTypingDone, setIsTypingDone] = useState(false);
 
   useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, speed);
+    setIsTypingDone(false);
+    setDisplayedText("");
 
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, speed]);
+    let currentIndex = 0;
+
+    const timer = setInterval(() => {
+      if (currentIndex < text.length) {
+        setDisplayedText(text.substring(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        setIsTypingDone(true);
+        clearInterval(timer);
+      }
+    }, speed);
+
+    return () => clearInterval(timer);
+  }, [text, speed]);
 
   return (
     <span className="inline-block">
-      {displayedText}
+      {/* Pokazuje animowany tekst, a w razie braku startu wyświetla pełny tekst */}
+      {displayedText || (!isTypingDone && text ? "" : text)}
       <span className="inline-block w-2.5 h-5 ml-1 bg-brand animate-pulse align-middle" />
     </span>
   );

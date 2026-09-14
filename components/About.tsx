@@ -14,7 +14,9 @@ export default function About() {
                 src="/images/project.webp"
                 alt="Tom Bergson"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 448px"
                 className="object-cover object-center grayscale-0 md:grayscale md:hover:grayscale-0 transition-all duration-500"
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
             </div>
