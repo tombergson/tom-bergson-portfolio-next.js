@@ -292,7 +292,7 @@ export default function Portfolio() {
           aria-labelledby="modal-title"
         >
           <div
-            className="relative w-full max-w-3xl bg-neutral-950 border border-neutral-800/90 rounded-xl overflow-hidden shadow-2xl max-h-[85dvh] flex flex-col"
+            className="relative w-[95vw] sm:w-full max-w-4xl bg-neutral-950 border border-neutral-800/90 rounded-xl overflow-hidden shadow-2xl max-h-[92dvh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Przycisk zamykania */}
@@ -306,12 +306,18 @@ export default function Portfolio() {
               <X className="w-4 h-4" />
             </button>
 
-            {/* Podgląd w modalu */}
-            <div className="relative aspect-video w-full bg-neutral-900/40 shrink-0">
+            {/* Podgląd w modalu — jawna wysokość, bez zależności od flex-grow */}
+            <div
+              className="relative w-full bg-neutral-900/40 shrink-0"
+              style={{ height: "70dvh", minHeight: "320px", maxHeight: "70dvh" }}
+            >
               <Image
                 src={selectedProject.image}
                 alt={selectedProject.title}
                 fill
+                priority
+                unoptimized
+                sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 896px"
                 className="object-contain object-center p-2"
               />
             </div>
