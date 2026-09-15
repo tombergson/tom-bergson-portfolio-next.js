@@ -7,6 +7,25 @@ const nextConfig: NextConfig = {
   },
   allowedDevOrigins: ["192.168.8.11"],
   headers: async () => {
+    const isDev = process.env.NODE_ENV === "development";
+
+    // Dynamiczna polityka CSP z uwzględnieniem środowiska deweloperskiego
+    const cspValue = [
+      "default-src 'self'",
+      `script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval'" : ""} https://challenges.cloudflare.com`,
+      "frame-src https://challenges.cloudflare.com",
+      "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com",
+      "img-src 'self' data: https:",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+    ]
+      .join("; ")
+      .replace(/\s{2,}/g, " ");
+
     return [
       {
         source: "/:path*",
@@ -29,7 +48,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';",
+            value: cspValue,
           },
         ],
       },
