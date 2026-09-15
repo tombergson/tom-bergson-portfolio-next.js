@@ -1,22 +1,72 @@
 import Image from "next/image";
 
-const techStack = [
-  { name: "Photoshop", icon: "/images/tech/photoshop.webp" },
-  { name: "Illustrator", icon: "/images/tech/illustrator.webp" },
-  { name: "InDesign", icon: "/images/tech/indesign.webp" },
-  { name: "HTML5", icon: "/images/tech/html5.webp" },
-  { name: "CSS3", icon: "/images/tech/css3.webp" },
-  { name: "Python", icon: "/images/tech/python.webp" },
-  { name: "Debian", icon: "/images/tech/debian.webp" },
-  { name: "Drupal", icon: "/images/tech/drupal.webp", scale: "scale-150" },
-  { name: "OpenAI", icon: "/images/tech/openai-logomark.webp", invert: true },
-  { name: "Laravel", icon: "/images/tech/laravel.webp" },
-  { name: "Next.js", icon: "/images/tech/next-js.webp", invert: true, scale: "scale-170" },
-  { name: "React", icon: "/images/tech/react.webp" },
+type TechItem = {
+  name: string;
+  icon: string;
+  scale?: string;
+  invert?: boolean;
+};
+
+const groups: { items: TechItem[] }[] = [
+  {
+    items: [
+      { name: "Photoshop", icon: "/images/tech/photoshop.webp" },
+      { name: "Illustrator", icon: "/images/tech/illustrator.webp" },
+      { name: "InDesign", icon: "/images/tech/indesign.webp" },
+    ],
+  },
+  {
+    items: [
+      { name: "HTML5", icon: "/images/tech/html5.webp" },
+      { name: "CSS3", icon: "/images/tech/css3.webp" },
+      { name: "React", icon: "/images/tech/react.webp" },
+      {
+        name: "Next.js",
+        icon: "/images/tech/next-js.webp",
+        invert: true,
+        scale: "scale-150",
+      },
+      { name: "Laravel", icon: "/images/tech/laravel.webp" },
+      { name: "Drupal", icon: "/images/tech/drupal.webp", scale: "scale-150" },
+    ],
+  },
+  {
+    items: [
+      { name: "Python", icon: "/images/tech/python.webp" },
+      { name: "Debian", icon: "/images/tech/debian.webp" },
+      {
+        name: "OpenAI",
+        icon: "/images/tech/openai-logomark.webp",
+        invert: true,
+      },
+    ],
+  },
 ];
 
+/** Jedna płaska taśma: ikony + | między grupami */
+function buildStrip() {
+  const strip: Array<
+    { kind: "icon"; tech: TechItem } | { kind: "divider" }
+  > = [];
+
+  groups.forEach((group, gi) => {
+    group.items.forEach((tech) => {
+      strip.push({ kind: "icon", tech });
+    });
+    if (gi < groups.length - 1) {
+      strip.push({ kind: "divider" });
+    }
+  });
+
+  // Separator między końcem a początkiem przy zapętleniu marquee
+  strip.push({ kind: "divider" });
+
+  return strip;
+}
+
 export default function TechStrip() {
-  const triplicatedTech = [...techStack, ...techStack, ...techStack];
+  const strip = buildStrip();
+  const loop = [...strip, ...strip, ...strip];
 
   return (
     <section className="py-14 bg-black border-y border-neutral-900 overflow-hidden">
@@ -31,31 +81,43 @@ export default function TechStrip() {
 
           <div className="flex w-full overflow-hidden">
             <div
-              className="animate-marquee flex items-center gap-14 md:gap-20"
+              className="animate-marquee flex items-center gap-10 md:gap-14"
               role="list"
               aria-label="Wykorzystywane technologie"
             >
-              {triplicatedTech.map((tech, index) => {
-                const isDuplicate = index >= techStack.length;
+              {loop.map((entry, index) => {
+                const isDuplicate = index >= strip.length;
+
+                if (entry.kind === "divider") {
+                  return (
+                    <span
+                      key={`divider-${index}`}
+                      className="shrink-0 text-neutral-600 text-2xl md:text-3xl font-light select-none px-1"
+                      aria-hidden="true"
+                    >
+                      |
+                    </span>
+                  );
+                }
+
+                const { tech } = entry;
+
                 return (
                   <div
                     key={`${tech.name}-${index}`}
                     className="opacity-90 hover:opacity-100 transition-opacity duration-300 group cursor-pointer shrink-0 flex items-center justify-center w-14 h-14 md:w-16 md:h-16"
                     title={tech.name}
                     role={isDuplicate ? undefined : "listitem"}
-                    aria-hidden={isDuplicate ? "true" : undefined}
+                    aria-hidden={isDuplicate ? true : undefined}
                   >
                     <Image
                       src={tech.icon}
                       alt={isDuplicate ? "" : tech.name}
                       width={64}
                       height={64}
-                      className={`max-w-full max-h-full object-contain transition-transform duration-300 ${
-                        tech.scale ? tech.scale : ""
-                      } group-hover:scale-110 ${
-                        tech.invert ? "invert brightness-200" : ""
-                      }`}
-                      style={{ width: "auto", height: "auto" }}
+                      className={`h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 ${
+                        tech.scale ?? ""
+                      } ${tech.invert ? "invert brightness-200" : ""}`}
                     />
                   </div>
                 );
