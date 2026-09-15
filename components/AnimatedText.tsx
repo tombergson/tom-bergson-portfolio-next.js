@@ -3,37 +3,76 @@
 import { useEffect, useState } from "react";
 
 interface AnimatedTextProps {
-  text: string;
-  speed?: number;
+  texts?: string[];
+  typingSpeed?: number;
+  pauseDuration?: number;
+  gapDuration?: number;
 }
 
-export default function AnimatedText({ text, speed = 40 }: AnimatedTextProps) {
-  const [displayedText, setDisplayedText] = useState("");
+export default function AnimatedText({
+  texts = [],
+  typingSpeed = 150,
+  pauseDuration = 5000,
+  gapDuration = 400,
+}: AnimatedTextProps) {
+  const [index, setIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [phase, setPhase] = useState<"typing" | "pause" | "gap">("typing");
+
+  const safeTexts = texts.filter(Boolean);
+  const current = safeTexts[index] ?? "";
 
   useEffect(() => {
-    let currentIndex = 0;
-    let isTypingDone = false;
+    if (safeTexts.length === 0) return;
 
-    const timer = setInterval(() => {
-      if (currentIndex < text.length) {
-        setDisplayedText(text.substring(0, currentIndex + 1));
-        currentIndex++;
-      } else if (!isTypingDone) {
-        isTypingDone = true;
-        clearInterval(timer);
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (phase === "typing") {
+      if (charIndex < current.length) {
+        timeout = setTimeout(() => {
+          setCharIndex((c) => c + 1);
+        }, typingSpeed);
+      } else {
+        // pełny tekst — mruganie kursora (pause)
+        timeout = setTimeout(() => {
+          setPhase("gap");
+        }, pauseDuration);
       }
-    }, speed);
+    } else if (phase === "gap") {
+      // tekst znika od razu, krótka przerwa, następny
+      timeout = setTimeout(() => {
+        setCharIndex(0);
+        setIndex((i) => (i + 1) % safeTexts.length);
+        setPhase("typing");
+      }, gapDuration);
+    }
 
-    return () => clearInterval(timer);
-  }, [text, speed]);
+    return () => clearTimeout(timeout);
+  }, [
+    charIndex,
+    phase,
+    index,
+    current,
+    safeTexts.length,
+    typingSpeed,
+    pauseDuration,
+    gapDuration,
+  ]);
+
+  if (safeTexts.length === 0) {
+    return <span className="inline-block" />;
+  }
+
+  // w fazie gap nie pokazuj tekstu
+  const displayed = phase === "gap" ? "" : current.slice(0, charIndex);
 
   return (
-    <span className="inline-block">
-      {/* Pokazuje animowany tekst */}
-      {displayedText || text}
-      {displayedText.length < text.length && (
-        <span className="inline-block w-2.5 h-5 ml-1 bg-brand animate-pulse align-middle" />
-      )}
+    <span className="inline-block min-h-[1.2em]">
+      {displayed}
+      <span
+        className="inline-block w-2.5 h-5 ml-1 bg-brand animate-pulse align-middle"
+        aria-hidden
+      />
     </span>
   );
 }

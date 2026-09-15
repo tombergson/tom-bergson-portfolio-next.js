@@ -31,7 +31,7 @@ export default function Hero() {
           Crafting Visual Identities & Digital Experiences
         </h1>
         <p className="text-neutral-400 text-base md:text-xl max-w-2xl leading-relaxed mb-10 font-mono min-h-[4rem] mx-auto">
-          <AnimatedText text="Specializing in premium graphic design, branding systems, and modern web applications." />
+          <AnimatedText texts={["Visual Identities","Creative AI Tools","Modern Web Apps",]}/>
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
