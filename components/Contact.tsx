@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Script from "next/script";
 import { Mail, MapPin, ArrowUpRight, Loader2, CheckCircle, AlertCircle } from "lucide-react";
@@ -32,15 +32,9 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
   
-  const [decodedEmail, setDecodedEmail] = useState<string>("");
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const turnstileRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const user = "studio";
-    const domain = "tombergson.eu";
-    setDecodedEmail(`${user}@${domain}`);
-  }, []);
+  const decodedEmail = "studio@tombergson.eu";
 
   const renderTurnstile = () => {
     if (window.turnstile && turnstileRef.current && !turnstileRef.current.hasChildNodes()) {
@@ -110,7 +104,7 @@ export default function Contact() {
         setStatus("error");
         setErrorMessage(result.message || "Wystąpił problem z wysyłką.");
       }
-    } catch (err) {
+    } catch {
       setStatus("error");
       setErrorMessage("Wystąpił błąd sieci. Spróbuj ponownie później.");
     }

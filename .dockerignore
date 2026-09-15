@@ -1,0 +1,60 @@
+# Dependencies
+node_modules
+.pnp
+.yarn
+
+# Environment variables (security-critical)
+.env
+.env.local
+.env.*.local
+
+# Git & version control
+.git
+.gitignore
+.github
+
+# Build & cache
+.next
+out
+build
+dist
+.swc
+
+# IDE & tools
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing & coverage
+coverage
+.nyc_output
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# Source
+src
+components
+app
+lib
+public
+
+# Config files
+tsconfig.json
+next.config.ts
+tailwind.config.ts
+postcss.config.mjs
+eslint.config.mjs
+Dockerfile
+docker-compose.yml
+
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log

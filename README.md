@@ -24,7 +24,28 @@ High-performance web developer & graphic designer portfolio built with **Next.js
 
 ## 🚀 Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 🔨 Build & Production
+
+Build for production:
+
+```bash
+npm run build
+npm start
+```
 
 🔒 License
 Created by Tom Bergson. All rights reserved.

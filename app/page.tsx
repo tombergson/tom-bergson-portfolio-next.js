@@ -28,7 +28,7 @@ export default function Home() {
             className="inline-flex items-center hover:opacity-80 transition-opacity"
           >
             <Image
-              src="/favicon.ico"
+              src="/images/footer-tb-logo.png"
               alt="Logo"
               width={18}
               height={18}
@@ -37,7 +37,7 @@ export default function Home() {
           </a>
         </div>
         <div>
-          © 2026 Copyright |{" "}
+          © {new Date().getFullYear()} Copyright |{" "}
           <a 
             href="https://tombergson.eu" 
             target="_blank" 

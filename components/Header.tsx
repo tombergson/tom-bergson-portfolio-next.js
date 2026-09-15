@@ -34,6 +34,21 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+
+    if (mobileMenuOpen) {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setMobileMenuOpen(false);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -78,7 +93,7 @@ export default function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-neutral-300 hover:text-white focus:outline-none p-2 shrink-0"
+          className="md:hidden text-neutral-300 hover:text-white p-2 shrink-0 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none rounded"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-menu"
@@ -94,23 +109,23 @@ export default function Header() {
       </div>
 
       {/* Mobile Nav Menu */}
-      {mobileMenuOpen && (
-        <nav
-          id="mobile-menu"
-          className="md:hidden bg-neutral-950 border-b border-neutral-800 px-6 py-4 space-y-4"
-        >
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm uppercase tracking-widest text-neutral-300 hover:text-brand"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      )}
+      <nav
+        id="mobile-menu"
+        className={`md:hidden bg-neutral-950 border-b border-neutral-800 px-6 py-4 space-y-4 ${
+          mobileMenuOpen ? "block" : "hidden"
+        }`}
+      >
+        {navItems.map((item) => (
+          <Link
+            key={item.name}
+            href={item.href}
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm uppercase tracking-widest text-neutral-300 hover:text-brand"
+          >
+            {item.name}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

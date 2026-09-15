@@ -199,7 +199,6 @@ export default function Portfolio() {
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                aria-pressed={isActive}
                 onClick={() => setActiveCategory(cat.key)}
                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
                   isActive
