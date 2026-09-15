@@ -12,7 +12,7 @@ interface AnimatedTextProps {
 export default function AnimatedText({
   texts = [],
   typingSpeed = 150,
-  pauseDuration = 5000,
+  pauseDuration = 4000,
   gapDuration = 400,
 }: AnimatedTextProps) {
   const [index, setIndex] = useState(0);
