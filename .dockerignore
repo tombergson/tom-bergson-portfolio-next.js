@@ -37,22 +37,6 @@ README.md
 CHANGELOG.md
 LICENSE
 
-# Source
-src
-components
-app
-lib
-public
-
-# Config files
-tsconfig.json
-next.config.ts
-tailwind.config.ts
-postcss.config.mjs
-eslint.config.mjs
-Dockerfile
-docker-compose.yml
-
 # Logs
 npm-debug.log
 yarn-debug.log
