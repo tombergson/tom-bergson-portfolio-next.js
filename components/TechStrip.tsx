@@ -74,17 +74,17 @@ export default function TechStrip() {
   const loop = [...strip, ...strip, ...strip];
 
   return (
-    <section className="py-14 bg-black border-y border-neutral-900 overflow-hidden">
+    <section className="py-8 bg-black border-y border-neutral-950 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <p className="text-center text-xs uppercase tracking-widest text-neutral-500 mb-10 font-semibold">
+        <p className="text-center text-xs uppercase tracking-widest text-neutral-500 mb-6 font-semibold">
           Powered by Industry-Standard Tools & Technologies
         </p>
 
         <div className="relative overflow-hidden max-w-5xl mx-auto">
-          <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none" />
 
-          <div className="flex w-full overflow-hidden py-10">
+          <div className="flex w-full overflow-x-hidden py-3">
             <div
               className="animate-marquee flex items-center gap-10 md:gap-14"
               role="list"
@@ -95,7 +95,7 @@ export default function TechStrip() {
                   return (
                     <span
                       key={`divider-${index}`}
-                      className="shrink-0 text-neutral-600 text-2xl md:text-3xl font-light select-none px-1"
+                      className="shrink-0 text-neutral-800 text-xl md:text-2xl font-light select-none px-1"
                       aria-hidden="true"
                     >
                       |
@@ -108,22 +108,20 @@ export default function TechStrip() {
                 return (
                   <div
                     key={`${tech.name}-${index}`}
-                    className="relative opacity-90 hover:opacity-100 transition-opacity duration-300 group cursor-pointer shrink-0 flex items-center justify-center w-14 h-14 md:w-16 md:h-16"
+                    // Dodano klasę "group" do obsługi najechania
+                    className="group opacity-70 hover:opacity-100 transition-opacity duration-300 shrink-0 flex items-center justify-center w-10 h-10 md:w-12 md:h-12"
                     role="listitem"
                   >
                     <Image
                       src={tech.icon}
                       alt={tech.name}
-                      width={64}
-                      height={64}
-                      className={`h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 ${
+                      width={48}
+                      height={48}
+                      // Zwiększono efekt zoomu na group-hover:scale-125
+                      className={`h-full w-full object-contain transition-transform duration-300 group-hover:scale-125 ${
                         tech.scale ?? ""
                       } ${tech.invert ? "invert brightness-200" : ""}`}
                     />
-
-                    <span className="pointer-events-none absolute left-1/2 top-full z-30 mt-2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-900 opacity-0 shadow-md transition-opacity duration-150 group-hover:opacity-100">
-                      {tech.name}
-                    </span>
                   </div>
                 );
               })}
