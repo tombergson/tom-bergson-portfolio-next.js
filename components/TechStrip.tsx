@@ -9,41 +9,51 @@ type TechItem = {
 
 const groups: { items: TechItem[] }[] = [
   {
+    // Design
     items: [
-      { name: "Photoshop", icon: "/images/tech/photoshop.webp" },
-      { name: "Illustrator", icon: "/images/tech/illustrator.webp" },
-      { name: "InDesign", icon: "/images/tech/indesign.webp" },
+      { name: "Photoshop", icon: "/images/tech/Adobe-Photoshop.svg" },
+      { name: "Illustrator", icon: "/images/tech/Adobe-Illustrator.svg" },
+      { name: "VS Code", icon: "/images/tech/VSCode.svg" },
     ],
   },
   {
+    // Frontend & frameworks
     items: [
-      { name: "HTML5", icon: "/images/tech/html5.webp" },
-      { name: "CSS3", icon: "/images/tech/css3.webp" },
-      { name: "React", icon: "/images/tech/react.webp" },
-      {
-        name: "Next.js",
-        icon: "/images/tech/next-js.webp",
-        invert: true,
-        scale: "scale-150",
-      },
-      { name: "Laravel", icon: "/images/tech/laravel.webp" },
-      { name: "Drupal", icon: "/images/tech/drupal.webp", scale: "scale-150" },
+      { name: "HTML5", icon: "/images/tech/HTML5.svg" },
+      { name: "CSS3", icon: "/images/tech/CSS3.svg" },
+      { name: "Bootstrap", icon: "/images/tech/Bootstrap.svg" },
+      { name: "React", icon: "/images/tech/React.svg" },
+      { name: "Next.js", icon: "/images/tech/Next.js.svg", invert: true },
+      { name: "Laravel", icon: "/images/tech/Laravel.svg" },
+      { name: "Drupal", icon: "/images/tech/Drupal.svg" },
     ],
   },
   {
+    // Languages & data
     items: [
-      { name: "Python", icon: "/images/tech/python.webp" },
-      { name: "Debian", icon: "/images/tech/debian.webp" },
-      {
-        name: "OpenAI",
-        icon: "/images/tech/openai-logomark.webp",
-        invert: true,
-      },
+      { name: "Python", icon: "/images/tech/Python.svg" },
+      { name: "Bash", icon: "/images/tech/Bash.svg", invert: true },
+      { name: "JSON", icon: "/images/tech/JSON.svg", invert: true },
+      { name: "Redis", icon: "/images/tech/Redis.svg" },
+    ],
+  },
+  {
+    // Infra & DevOps
+    items: [
+      { name: "Docker", icon: "/images/tech/Docker.svg" },
+      { name: "Debian", icon: "/images/tech/Debian.svg" },
+      { name: "Fedora", icon: "/images/tech/Fedora.svg" },
+      { name: "Red Hat", icon: "/images/tech/Red-Hat.svg" },
+      { name: "NGINX", icon: "/images/tech/NGINX.svg" },
+      { name: "Cloudflare", icon: "/images/tech/Cloudflare.svg" },
+      { name: "Ansible", icon: "/images/tech/Ansible.svg" },
+      { name: "Vault", icon: "/images/tech/HashiCorp-Vault.svg" },
+      { name: "Git", icon: "/images/tech/Git.svg" },
+      { name: "GitHub", icon: "/images/tech/GitHub.svg", invert: true },
     ],
   },
 ];
 
-/** Jedna płaska taśma: ikony + | między grupami */
 function buildStrip() {
   const strip: Array<
     { kind: "icon"; tech: TechItem } | { kind: "divider" }
@@ -58,7 +68,7 @@ function buildStrip() {
     }
   });
 
-  // Separator między końcem a początkiem przy zapętleniu marquee
+  // | na styku pętli marquee
   strip.push({ kind: "divider" });
 
   return strip;
