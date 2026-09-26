@@ -5,11 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Portfolio", href: "#portfolio" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/#home" },
+  { name: "Services", href: "/#services" },
+  { name: "About", href: "/#about" },
+  { name: "Portfolio", href: "/#portfolio" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "Privacy Policy | Tom Bergson",
@@ -7,8 +9,12 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-200 px-6 py-24 md:py-32">
-      <div className="max-w-3xl mx-auto space-y-12">
+    <main className="min-h-screen bg-neutral-950 text-neutral-200">
+      {/* Menu / Header */}
+      <Header />
+
+      {/* Główna treść */}
+      <div className="max-w-3xl mx-auto px-6 pt-32 pb-24 md:py-40 space-y-12">
 
         {/* Nagłówek */}
         <header className="space-y-4 border-b border-neutral-800 pb-8">
@@ -182,6 +188,48 @@ export default function PrivacyPolicyPage() {
         </div>
 
       </div>
+
+      {/* Stopka */}
+      <footer className="py-8 border-t border-neutral-900 text-center text-sm text-neutral-500 flex flex-col items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2">
+          <span>Designed by</span>
+          <a 
+            href="https://tombergson.eu" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/images/footer-tb-logo.png"
+              alt="Logo"
+              width={18}
+              height={18}
+              className="w-[18px] h-[18px] rounded-sm object-contain scale-110"
+            />
+          </a>
+        </div>
+        
+        <div className="flex items-center justify-center gap-2">
+          <span>© {new Date().getFullYear()} Copyright |</span>
+          <a 
+            href="https://tombergson.eu" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-neutral-300 transition-colors"
+          >
+            tombergson.eu
+          </a>
+        </div>
+
+        <div>
+          <Link 
+            href="/privacy-policy" 
+            className="hover:text-neutral-300 transition-colors underline underline-offset-4"
+          >
+            Privacy Policy
+          </Link>
+        </div>
+      </footer>
     </main>
   );
 }
