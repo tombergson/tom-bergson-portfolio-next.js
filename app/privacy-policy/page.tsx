@@ -7,6 +7,21 @@ export const metadata = {
   description: "Privacy Policy and cookie usage information for Tom Bergson portfolio website.",
 };
 
+// Bezpieczny komponent chroniący e-mail przed scraperami
+function ObfuscatedEmail() {
+  const user = "studio";
+  const domain = "tombergson.eu";
+  const email = `${user}@${domain}`;
+  return (
+    <a 
+      href={`mailto:${email}`} 
+      className="text-neutral-200 hover:text-white underline underline-offset-4"
+    >
+      {email}
+    </a>
+  );
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-neutral-950 text-neutral-200">
@@ -35,8 +50,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p>
               The data controller responsible for your personal data processed through this
-              website is [FULL LEGAL NAME / BUSINESS NAME], [ADDRESS], [NIP / REGON if
-              applicable], reachable at [CONTACT EMAIL]. This policy is provided in accordance
+              website is <strong className="text-neutral-200">Tom Bergson</strong>, located at <strong className="text-neutral-200">ul. Niepodległości 69a, 02-626 Warsaw, POLAND</strong>, reachable at <ObfuscatedEmail />. This policy is provided in accordance
               with Regulation (EU) 2016/679 (GDPR) and the Polish Act of 10 May 2018 on the
               Protection of Personal Data.
             </p>
@@ -86,9 +100,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <strong className="text-neutral-200">Analytics cookies:</strong> used, only with
-                your consent, to understand how visitors use the website. [Name the specific
-                provider, e.g. Google Analytics / Plausible / none, and link to its own privacy
-                policy.]
+                your consent, to understand how visitors use the website.
               </li>
             </ul>
           </section>
@@ -98,8 +110,8 @@ export default function PrivacyPolicyPage() {
               4. Data Retention
             </h2>
             <p>
-              Contact form submissions are retained for [X months/years] or until you request
-              deletion, whichever comes first. Technical/log data is retained for [X days] for
+              Contact form submissions are retained for up to 12 months or until you request
+              deletion, whichever comes first. Technical/log data is retained for 30 days for
               security purposes. Cookie consent choices are stored for up to 12 months.
             </p>
           </section>
@@ -109,11 +121,9 @@ export default function PrivacyPolicyPage() {
               5. Recipients and International Transfers
             </h2>
             <p>
-              Your data may be processed by service providers acting on our behalf, such as our
-              hosting provider [NAME] and email delivery provider [NAME], strictly for the
-              purposes described above. [If any provider is located outside the EEA, state the
-              transfer mechanism, e.g. Standard Contractual Clauses, here. If all providers are
-              within the EEA, state that instead.]
+              Your data may be processed by trusted service providers acting on our behalf, such as our
+              hosting and infrastructure providers, strictly for the
+              purposes described above within the European Economic Area (EEA).
             </p>
           </section>
 
@@ -138,7 +148,7 @@ export default function PrivacyPolicyPage() {
               </li>
             </ul>
             <p>
-              To exercise any of these rights, contact us at [CONTACT EMAIL]. We will respond
+              To exercise any of these rights, contact us at <ObfuscatedEmail />. We will respond
               within one month, as required by Art. 12(3) GDPR.
             </p>
           </section>
@@ -171,7 +181,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p>
               For any questions about this Privacy Policy or how your data is processed, contact
-              us at [CONTACT EMAIL] or through the contact form on the main page of this website.
+              us at <ObfuscatedEmail /> or through the contact form on the main page of this website.
             </p>
           </section>
 
