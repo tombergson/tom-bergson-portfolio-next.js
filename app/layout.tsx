@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import CookieBanner from "@/components/CookieBanner";
+import ScrollToTop from "@/components/ScrollToTop";
 import "./globals.css";
 
 const inter = Inter({
@@ -97,6 +98,7 @@ export default function RootLayout({
       >
         {children}
         <CookieBanner />
+        <ScrollToTop />
       </body>
     </html>
   );
