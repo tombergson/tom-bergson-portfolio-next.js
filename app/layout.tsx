@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import CookieBanner from "@/components/CookieBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -95,6 +96,7 @@ export default function RootLayout({
         className={`${inter.variable} font-sans bg-neutral-950 text-neutral-100 antialiased selection:bg-[#BE1522] selection:text-white`}
       >
         {children}
+        <CookieBanner />
       </body>
     </html>
   );
