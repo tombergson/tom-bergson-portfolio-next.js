@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,9 +18,8 @@ export default function Home() {
       <About />
       <Portfolio />
       <Contact />
-
       <footer className="py-8 border-t border-neutral-900 text-center text-sm text-neutral-500 flex flex-col items-center justify-center gap-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <span>Designed by</span>
           <a 
             href="https://tombergson.eu" 
@@ -36,8 +36,9 @@ export default function Home() {
             />
           </a>
         </div>
-        <div>
-          © {new Date().getFullYear()} Copyright |{" "}
+        
+        <div className="flex items-center justify-center gap-2">
+          <span>© {new Date().getFullYear()} Copyright |</span>
           <a 
             href="https://tombergson.eu" 
             target="_blank" 
@@ -46,6 +47,15 @@ export default function Home() {
           >
             tombergson.eu
           </a>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <Link 
+            href="/privacy-policy" 
+            className="hover:text-neutral-300 transition-colors underline underline-offset-4"
+          >
+            Privacy Policy
+          </Link>
         </div>
       </footer>
     </main>
