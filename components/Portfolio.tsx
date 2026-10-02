@@ -14,6 +14,7 @@ interface Project {
   description: string;
   image: string;
   imageClassName?: string;
+  imageContainerClassName?: string;
   tags: string[];
   link?: string;
   linkLabel?: string;
@@ -110,7 +111,7 @@ const projects: Project[] = [
     categoryLabel: "Logo & Web",
     description: "Kompleksowa identyfikacja wizualna, branding produktowy oraz serwis internetowy marki.",
     image: "/portfolio/Logo_Square.webp",
-    imageClassName: "bg-white p-4", // Zachowuje object-cover, ale dodaje białe tło i margines wewnętrzny
+    imageContainerClassName: "bg-white", // <-- TYLKO TUTAJ DODANE BIAŁE TŁO KONTENERA
     tags: ["Branding", "Web Development", "E-Commerce"],
     link: "https://miodystaropolskie.pl",
     linkLabel: "miodystaropolskie.pl",
@@ -152,6 +153,7 @@ export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  // Blokada scrolla w body oraz obsługa klawisza ESC podczas otwartego modala
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -190,7 +192,7 @@ export default function Portfolio() {
           </h3>
         </div>
 
-        {/* Filtry kategorii */}
+        {/* Subtelne filtry kategorii z atrybutami a11y */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 mb-12" role="tablist">
           {categories.map((cat) => {
             const isActive = activeCategory === cat.key;
@@ -224,17 +226,15 @@ export default function Portfolio() {
             >
               <div className="w-full">
                 {/* Podgląd obrazka */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-900/50">
+                <div className={`relative aspect-[16/10] w-full overflow-hidden ${project.imageContainerClassName || "bg-neutral-900/50"}`}>
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className={`object-cover object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out ${
-                      project.imageClassName || ""
-                    }`}
+                    className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                   />
-                  <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-300" />
                 </div>
 
                 {/* Informacje o projekcie */}
@@ -263,7 +263,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Link */}
+              {/* Subtelny Chip Linku */}
               {project.link && (
                 <div className="px-5 pb-5 pt-0">
                   <a
@@ -284,7 +284,7 @@ export default function Portfolio() {
 
       </div>
 
-      {/* Modal */}
+      {/* Dostępny i mobilny Modal z dvh, Escape & ARIA */}
       {selectedProject && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
@@ -297,6 +297,7 @@ export default function Portfolio() {
             className="relative w-[95vw] sm:w-full max-w-4xl bg-neutral-950 border border-neutral-800/90 rounded-xl overflow-hidden shadow-2xl max-h-[92dvh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Przycisk zamykania */}
             <button
               ref={closeButtonRef}
               type="button"
@@ -307,8 +308,9 @@ export default function Portfolio() {
               <X className="w-4 h-4" />
             </button>
 
+            {/* Podgląd w modalu — jawna wysokość, bez zależności od flex-grow */}
             <div
-              className="relative w-full bg-neutral-900/40 shrink-0"
+              className={`relative w-full shrink-0 ${selectedProject.imageContainerClassName || "bg-neutral-900/40"}`}
               style={{ height: "70dvh", minHeight: "320px", maxHeight: "70dvh" }}
             >
               <Image
@@ -318,10 +320,11 @@ export default function Portfolio() {
                 priority
                 unoptimized
                 sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 896px"
-                className={`object-cover object-center ${selectedProject.imageClassName || ""}`}
+                className="object-contain object-center p-2"
               />
             </div>
 
+            {/* Treść w modalu */}
             <div className="p-6 overflow-y-auto">
               <span className="text-[11px] font-mono text-neutral-500 tracking-wider uppercase mb-1 block">
                 {selectedProject.categoryLabel}
