@@ -102,6 +102,8 @@ const projects: Project[] = [
     categoryLabel: "Logo",
     description: "System wizualny, znak graficzny oraz obecność cyfrowa dopasowana do wymogów organizacji.",
     image: "/portfolio/pzp1.webp",
+    imageContainerClassName: "bg-white",
+    imageClassName: "object-contain p-6 scale-110",
     tags: ["Logo", "Web Design", "Vector"],
   },
   {
@@ -111,7 +113,8 @@ const projects: Project[] = [
     categoryLabel: "Logo & Web",
     description: "Kompleksowa identyfikacja wizualna, branding produktowy oraz serwis internetowy marki.",
     image: "/portfolio/Logo_Square.webp",
-    imageContainerClassName: "bg-white", // <-- TYLKO TUTAJ DODANE BIAŁE TŁO KONTENERA
+    imageContainerClassName: "bg-white",
+    imageClassName: "object-contain scale-[1.3]",
     tags: ["Branding", "Web Development", "E-Commerce"],
     link: "https://miodystaropolskie.pl",
     linkLabel: "miodystaropolskie.pl",
@@ -232,9 +235,11 @@ export default function Portfolio() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+                    className={`object-center transition-transform duration-500 ease-out group-hover:scale-[1.02] ${project.imageClassName || "object-cover"}`}
                   />
-                  <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-300" />
+                  {!project.imageClassName && (
+                    <div className="absolute inset-0 bg-neutral-950/20 group-hover:bg-transparent transition-colors duration-300" />
+                  )}
                 </div>
 
                 {/* Informacje o projekcie */}
