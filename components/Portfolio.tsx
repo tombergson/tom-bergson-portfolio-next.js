@@ -15,6 +15,7 @@ interface Project {
   image: string;
   imageClassName?: string;
   imageContainerClassName?: string;
+  modalImageClassName?: string;
   tags: string[];
   link?: string;
   linkLabel?: string;
@@ -104,6 +105,7 @@ const projects: Project[] = [
     image: "/portfolio/pzp1.webp",
     imageContainerClassName: "bg-white",
     imageClassName: "object-contain p-6 scale-110",
+    modalImageClassName: "scale-[0.7]",
     tags: ["Logo", "Web Design", "Vector"],
   },
   {
@@ -126,6 +128,9 @@ const projects: Project[] = [
     categoryLabel: "Logo & Web",
     description: "Zestaw wektorowych zasobów graficznych, znaków towarowych oraz architektury serwisu WWW.",
     image: "/portfolio/master-file.webp",
+    imageContainerClassName: "bg-white",
+    imageClassName: "object-contain p-6 scale-110 brightness-0",
+    modalImageClassName: "brightness-0 scale-[0.7]",
     tags: ["Logo Design", "Web Ecosystem", "Assets"],
     link: "https://nshm.org.pl",
     linkLabel: "nshm.org.pl",
@@ -136,7 +141,9 @@ const projects: Project[] = [
     categories: ["logo"],
     categoryLabel: "Logo",
     description: "Identyfikacja wizualna oraz rozszerzona obecność cyfrowa dla zespołu strzeleckiego.",
-    image: "/portfolio/shootinh-team.webp",
+    image: "/portfolio/shooting-team.webp",
+    imageContainerClassName: "bg-white",
+    imageClassName: "object-contain scale-[1.0]",
     tags: ["Logo", "Web Architecture", "Branding"],
   },
 ];
@@ -325,7 +332,7 @@ export default function Portfolio() {
                 priority
                 unoptimized
                 sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 896px"
-                className="object-contain object-center p-2"
+                className={`object-contain object-center p-2 ${selectedProject.modalImageClassName || ""}`}
               />
             </div>
 
