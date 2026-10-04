@@ -57,6 +57,7 @@ const projects: Project[] = [
     description: "Przejrzyste logo dla serwisu cenybroni.pl.",
     image: "/portfolio/ceny_broni.svg",
     imageContainerClassName: "bg-white",
+    imageClassName: "object-contain scale-[1.6]",
     tags: ["Infographic", "Vector", "Poster"],
     link: "https://cenybroni.pl",
     linkLabel: "cenybroni.pl",
