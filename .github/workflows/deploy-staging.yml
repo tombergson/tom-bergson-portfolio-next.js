@@ -80,9 +80,22 @@ jobs:
           docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
           docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
 
+      # KROK 6: Wypchnięcie pełnego mirroru (zarówno staging, jak i main) na GitLab
       - name: Push code mirror to GitLab
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
           git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/${{ env.IMAGE_NAME }}.git
+          
+          # Pobierz informacje o zdalnym GitLabie i ustaw gałęzie
+          git fetch gitlab
+          
+          # Wypchnij staging
           git push gitlab HEAD:staging --force
+          
+          # Zmerguj staging do main i wypchnij na GitLab
+          git checkout -b local-staging
+          git checkout main || git checkout -b main gitlab/main || true
+          git merge local-staging --no-edit
+          git push origin main --force || true
+          git push gitlab main:main --force
