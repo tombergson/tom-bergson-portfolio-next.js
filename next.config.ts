@@ -5,16 +5,31 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  allowedDevOrigins: ["192.168.8.11"],
+  allowedDevOrigins: [
+    "192.168.8.16",
+    "192.168.8.16:3000",
+    "192.168.8.11",
+    "localhost:3000",
+  ],
   headers: async () => {
     const isDev = process.env.NODE_ENV === "development";
 
-    // Dynamiczna polityka CSP z uwzględnieniem środowiska deweloperskiego
+    // W trybie dev musimy zezwolić ws: i wss: dla przeładowywania Next.js (HMR)
+    const connectSrc = [
+      "'self'",
+      "https://api.resend.com",
+      "https://challenges.cloudflare.com",
+      isDev ? "ws:" : "",
+      isDev ? "wss:" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     const cspValue = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval'" : ""} https://challenges.cloudflare.com`,
       "frame-src https://challenges.cloudflare.com",
-      "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com",
+      `connect-src ${connectSrc}`,
       "img-src 'self' data: https:",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
@@ -44,7 +59,8 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
+            value:
+              "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
           },
           {
             key: "Content-Security-Policy",
