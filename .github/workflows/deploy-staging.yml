@@ -84,47 +84,4 @@ jobs:
           echo "Next.js responded with status: $STATUS"
 
           if [ "$STATUS" != "200" ] && [ "$STATUS" != "302" ]; then
-            echo "❌ Smoke Test Failed: HTTP $STATUS"
-            docker logs test-container
-            exit 1
-          fi
-          echo "✅ Smoke Test Passed!"
-
-      - name: Cleanup test container
-        if: always()
-        run: docker rm -f test-container || true
-
-      - name: Push final image to GHCR
-        run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.SHORT_SHA }}
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.DATE_TAG }}
-
-      - name: Push image copy to GitLab Registry
-        run: docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
-
-      # Mirror kodu: pobranie gałęzi z GitLaba, merge do staging i push na GitLab.
-      - name: Push code mirror to GitLab (staging)
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-        run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
-
-          git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/${{ env.IMAGE_NAME }}.git"
-          git fetch gitlab +refs/heads/*:refs/remotes/gitlab/*
-
-          git checkout -B staging
-
-          for branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/gitlab/); do
-            branch_name="${branch#gitlab/}"
-            if [ "$branch_name" != "staging" ] && [ "$branch_name" != "HEAD" ]; then
-              echo "🔄 Mergowanie $branch_name do staging..."
-              git merge "$branch" --no-edit --allow-unrelated-histories || {
-                echo "❌ Konflikt podczas mergowania $branch_name do staging"
-                exit 1
-              }
-            fi
-          done
-
-          git push gitlab staging:refs/heads/staging --force
+            echo "❌ Smoke Test Failed:
