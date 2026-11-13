@@ -42,8 +42,6 @@ jobs:
           username: tombergson
           password: ${{ secrets.GITLAB_TOKEN }}
 
-      # Jeden build: przetestowany obraz jest dokładnie tym, który trafia do rejestrów.
-      # pull: true wymusza świeży obraz bazowy node:24-alpine (bez starego cache z runnera).
       - name: Build image locally
         uses: docker/build-push-action@v6
         with:
@@ -103,10 +101,31 @@ jobs:
       - name: Push image copy to GitLab Registry
         run: docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
 
-      # Mirror kodu: tylko gałąź staging. Bez merge'a do main i bez force-push na GitHub.
-      - name: Push code mirror to GitLab (staging)
+      - name: Merge everything into staging on GitLab
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
           git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/${{ env.IMAGE_NAME }}.git"
-          git push gitlab HEAD:refs/heads/staging --force
+          git fetch gitlab +refs/heads/*:refs/remotes/gitlab/*
+
+          # Jesteśmy na branchu staging, pobieramy też zmiany z GitLabowego stagingu
+          git checkout staging || git checkout -b staging
+          git pull gitlab staging || true
+
+          # Scalamy (merge) dev z GitLaba do lokalnego stagingu (jeśli istnieje)
+          if git rev-parse --verify refs/remotes/gitlab/dev >/dev/null 2>&1; then
+            echo "🔄 Scalam gitlab/dev do staging..."
+            git merge remotes/gitlab/dev --no-edit || echo "⚠️ Konflikt z dev, pomijam automatyczny merge"
+          fi
+
+          # Scalamy (merge) main z GitLaba do lokalnego stagingu (jeśli istnieje)
+          if git rev-parse --verify refs/remotes/gitlab/main >/dev/null 2>&1; then
+            echo "🔄 Scalam gitlab/main do staging..."
+            git merge remotes/gitlab/main --no-edit || echo "⚠️ Konflikt z main, pomijam automatyczny merge"
+          fi
+
+          # Wypychamy ostateczny, zmergowany staging na GitLab
+          git push gitlab staging:staging --force
