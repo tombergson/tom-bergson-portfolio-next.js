@@ -84,4 +84,34 @@ jobs:
           echo "Next.js responded with status: $STATUS"
 
           if [ "$STATUS" != "200" ] && [ "$STATUS" != "302" ]; then
-            echo "❌ Smoke Test Failed:
+            echo "❌ Smoke Test Failed: HTTP $STATUS"
+            docker logs test-container
+            exit 1
+          fi
+          echo "✅ Smoke Test Passed!"
+
+      - name: Cleanup test container
+        if: always()
+        run: docker rm -f test-container || true
+
+      - name: Push final image to GHCR
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.SHORT_SHA }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.DATE_TAG }}
+
+      - name: Push image copy to GitLab Registry
+        run: docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
+
+      # staging = źródło prawdy: dev i main na GitLabie są wyrównywane do tego samego commita
+      - name: Push code mirror to GitLab (staging, dev, main aligned to staging)
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/${{ env.IMAGE_NAME }}.git"
+
+          for BRANCH in staging dev main; do
+            echo "→ gitlab/${BRANCH} := $(git rev-parse --short HEAD)"
+            git push gitlab "HEAD:refs/heads/${BRANCH}" --force
+          done
