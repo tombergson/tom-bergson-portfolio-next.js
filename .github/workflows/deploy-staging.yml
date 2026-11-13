@@ -42,6 +42,8 @@ jobs:
           username: tombergson
           password: ${{ secrets.GITLAB_TOKEN }}
 
+      # Jeden build: przetestowany obraz jest dokładnie tym, który trafia do rejestrów.
+      # pull: true wymusza świeży obraz bazowy node:24-alpine (bez starego cache z runnera).
       - name: Build image locally
         uses: docker/build-push-action@v6
         with:
@@ -101,7 +103,8 @@ jobs:
       - name: Push image copy to GitLab Registry
         run: docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
 
-      - name: Merge everything into staging on GitLab
+      # Mirror kodu: pobranie gałęzi z GitLaba, merge do staging i push na GitLab.
+      - name: Push code mirror to GitLab (staging)
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
@@ -111,21 +114,17 @@ jobs:
           git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/${{ env.IMAGE_NAME }}.git"
           git fetch gitlab +refs/heads/*:refs/remotes/gitlab/*
 
-          # Jesteśmy na branchu staging, pobieramy też zmiany z GitLabowego stagingu
-          git checkout staging || git checkout -b staging
-          git pull gitlab staging || true
+          git checkout -B staging
 
-          # Scalamy (merge) dev z GitLaba do lokalnego stagingu (jeśli istnieje)
-          if git rev-parse --verify refs/remotes/gitlab/dev >/dev/null 2>&1; then
-            echo "🔄 Scalam gitlab/dev do staging..."
-            git merge remotes/gitlab/dev --no-edit || echo "⚠️ Konflikt z dev, pomijam automatyczny merge"
-          fi
+          for branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/gitlab/); do
+            branch_name="${branch#gitlab/}"
+            if [ "$branch_name" != "staging" ] && [ "$branch_name" != "HEAD" ]; then
+              echo "🔄 Mergowanie $branch_name do staging..."
+              git merge "$branch" --no-edit --allow-unrelated-histories || {
+                echo "❌ Konflikt podczas mergowania $branch_name do staging"
+                exit 1
+              }
+            fi
+          done
 
-          # Scalamy (merge) main z GitLaba do lokalnego stagingu (jeśli istnieje)
-          if git rev-parse --verify refs/remotes/gitlab/main >/dev/null 2>&1; then
-            echo "🔄 Scalam gitlab/main do staging..."
-            git merge remotes/gitlab/main --no-edit || echo "⚠️ Konflikt z main, pomijam automatyczny merge"
-          fi
-
-          # Wypychamy ostateczny, zmergowany staging na GitLab
-          git push gitlab staging:staging --force
+          git push gitlab staging:refs/heads/staging --force
