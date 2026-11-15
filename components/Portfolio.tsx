@@ -206,6 +206,11 @@ export default function Portfolio() {
                 alt={selectedProject.title}
                 fill
                 priority
+                /* 
+                  Wyłączamy optymalizację Next.js (unoptimized), 
+                  aby poprawnie renderować grafiki wektorowe (SVG) 
+                  oraz duże assety w modalu bez narzutu na optymalizator.
+                */
                 unoptimized
                 sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 896px"
                 className={`object-contain object-center p-2 ${selectedProject.modalImageClassName || ""}`}
