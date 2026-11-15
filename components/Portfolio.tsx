@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { X, ExternalLink } from "lucide-react";
+import projectsData from "@/content/projects.json";
 
-type ProjectCategory = "all" | "calendar" | "poster" | "coin" | "sportswear" | "logo" | "web";
+export type ProjectCategory = "all" | "calendar" | "poster" | "coin" | "sportswear" | "logo" | "web";
 
-interface Project {
+export interface Project {
   id: string;
   title: string;
   categories: ProjectCategory[];
@@ -21,132 +22,7 @@ interface Project {
   linkLabel?: string;
 }
 
-const projects: Project[] = [
-  {
-    id: "1",
-    title: "Kalendarz Forum Broni 2018",
-    categories: ["calendar"],
-    categoryLabel: "Calendar",
-    description: "Autorski projekt kalendarza ściennego przygotowany dla społeczności pasjonatów broni.",
-    image: "/portfolio/kalendarz-forum-bron-2018.webp",
-    tags: ["Print", "Calendar", "Typography"],
-  },
-  {
-    id: "2",
-    title: "Kalendarz Forum Broni 2019",
-    categories: ["calendar"],
-    categoryLabel: "Calendar",
-    description: "Edycja 2019 wielkoformatowego kalendarza z dedykowaną oprawą graficzną i składem.",
-    image: "/portfolio/kalendarz-forum-bron-2019.webp",
-    tags: ["Print", "Editorial", "Design"],
-  },
-  {
-    id: "3",
-    title: "Plakat Piknik Pszczelarski 2018",
-    categories: ["poster"],
-    categoryLabel: "Poster",
-    description: "Projekt plakatu promocyjnego na wydarzenie plenerowe o wysokiej czytelności i wyrazistym stylu.",
-    image: "/portfolio/plakat-piknik-pszczelarski-2018.webp",
-    tags: ["Poster", "Branding", "Event"],
-  },
-  {
-    id: "4",
-    title: "Ceny Broni - logo",
-    categories: ["logo"],
-    categoryLabel: "Logo",
-    description: "Przejrzyste logo dla serwisu cenybroni.pl.",
-    image: "/portfolio/ceny_broni.svg",
-    imageContainerClassName: "bg-white",
-    imageClassName: "object-contain scale-[1.6]",
-    tags: ["Infographic", "Vector", "Poster"],
-    link: "https://cenybroni.pl",
-    linkLabel: "cenybroni.pl",
-  },
-  {
-    id: "5",
-    title: "Ulotka i Materiały Promocyjne",
-    categories: ["poster"],
-    categoryLabel: "Poster",
-    description: "Komercyjny projekt ulotki gastronomicznej z nastawieniem na ekspozycję oferty i nowoczesny układ.",
-    image: "/portfolio/ulotka-kebab.webp",
-    tags: ["Print", "Marketing", "Flyer"],
-  },
-  {
-    id: "6",
-    title: "Pamiątkowa Moneta Kolekcjonerska",
-    categories: ["coin"],
-    categoryLabel: "Coin",
-    description: "Wektorowy projekt trójwymiarowej monety kolekcjonerskiej z precyzyjnym reliefem.",
-    image: "/portfolio/coin.webp",
-    tags: ["3D Relief", "Coin Design", "Vector"],
-  },
-  {
-    id: "7",
-    title: "Medal Pamiątkowy NSHM",
-    categories: ["coin"],
-    categoryLabel: "Coin",
-    description: "Grawerowany projekt medalu okolicznościowego z dbałością o detale numizmatyczne.",
-    image: "/portfolio/medal-nshm.webp",
-    tags: ["Medal", "Metalwork", "Vector Art"],
-  },
-  {
-    id: "8",
-    title: "Forca Dęblin Visual Concept",
-    categories: ["sportswear"],
-    categoryLabel: "Sportswear",
-    description: "Projekt wizualny oraz wzornictwo sportowe nastawione na nowoczesną alokację i dynamikę krojów.",
-    image: "/portfolio/MOSAIC.webp",
-    tags: ["Sportswear", "Apparel", "Design"],
-  },
-  {
-    id: "9",
-    title: "Koło Pszczelarzy w Dęblinie - System Wizualny",
-    categories: ["logo"],
-    categoryLabel: "Logo",
-    description: "System wizualny, znak graficzny oraz obecność cyfrowa dopasowana do wymogów organizacji.",
-    image: "/portfolio/kpd.svg",
-    imageContainerClassName: "bg-white",
-    imageClassName: "object-contain scale-[1.3]",
-    tags: ["Logo", "Web Design", "Vector"],
-  },
-  {
-    id: "10",
-    title: "Miody Staropolskie - Kompleksowa Identyfikacja Wizualna",
-    categories: ["logo", "web"],
-    categoryLabel: "Logo & Web",
-    description: "Kompleksowa identyfikacja wizualna, branding produktowy oraz serwis internetowy marki.",
-    image: "/portfolio/miody.svg",
-    imageContainerClassName: "bg-white",
-    imageClassName: "object-contain scale-[1.3]",
-    tags: ["Branding", "Web Development", "E-Commerce"],
-    link: "https://miodystaropolskie.pl",
-    linkLabel: "miodystaropolskie.pl",
-  },
-  {
-    id: "11",
-    title: "Nadwiślańskie Stowarzyszenie Historii Militarnej - branding i serwis internetowy",
-    categories: ["logo", "web"],
-    categoryLabel: "Logo & Web",
-    description: "Zestaw wektorowych zasobów graficznych, znaków towarowych oraz architektury serwisu WWW.",
-    image: "/portfolio/nshm.svg",
-    imageContainerClassName: "bg-white",
-    imageClassName: "object-contain scale-[1.3]",
-    tags: ["Logo Design", "Web Ecosystem", "Assets"],
-    link: "https://nshm.org.pl",
-    linkLabel: "nshm.org.pl",
-  },
-  {
-    id: "12",
-    title: "Shooting Team Custom Project",
-    categories: ["logo"],
-    categoryLabel: "Logo",
-    description: "Identyfikacja wizualna oraz rozszerzona obecność cyfrowa dla zespołu strzeleckiego.",
-    image: "/portfolio/shooting_team.svg",
-    imageContainerClassName: "bg-white",
-    imageClassName: "object-contain scale-[1.3]",
-    tags: ["Logo", "Web Architecture", "Branding"],
-  },
-];
+const projects: Project[] = projectsData as Project[];
 
 const categories: { key: ProjectCategory; label: string }[] = [
   { key: "all", label: "All" },
@@ -320,7 +196,7 @@ export default function Portfolio() {
               <X className="w-4 h-4" />
             </button>
 
-            {/* Podgląd w modalu — jawna wysokość, bez zależności od flex-grow */}
+            {/* Podgląd w modalu */}
             <div
               className={`relative w-full shrink-0 ${selectedProject.imageContainerClassName || "bg-neutral-900/40"}`}
               style={{ height: "70dvh", minHeight: "320px", maxHeight: "70dvh" }}
