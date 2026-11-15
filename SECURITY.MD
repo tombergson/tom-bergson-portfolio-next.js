@@ -151,24 +151,17 @@ Dodatkowo:
 
 ### 8. Hardkodowany fallback klucza Turnstile
 
-**Status:** ⚠️ OTWARTE
+**Status:** ✅ NAPRAWIONE I ZAMKNIĘTE
 
-**Jest:** w `components/Contact.tsx` site key to:
-
-```ts
-process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "<klucz produkcyjny>"
-```
-
-W dev używany jest klucz testowy Cloudflare.
-
-**Skutek:** `NEXT_PUBLIC_*` jest wstawiane do bundla w czasie `next build`. Jeśli obraz nie dostaje klucza jako build arg, staging po cichu używa widgetu produkcyjnego.
-
-**Do zrobienia:**
-
-- [ ] `ARG` + `ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY` w Dockerfile przed `npm run build`.
-- [ ] `build-args` w workflow (osobny sekret dla stagingu i produkcji).
-- [ ] Osobny widget Turnstile dla `staging.tombergson.eu`.
-- [ ] Usunąć fallback z kodu (brak klucza = widoczny błąd, nie cicha podmiana).
+- **Było:** W `components/Contact.tsx` stosowano niebezpieczny fallback: `process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "<klucz produkcyjny>"`.
+- **Ryzyko:** Jeśli obraz Docker skompilowałby się bez wstrzykniętego `build-arg`, staging lub produkcja po cichu korzystałyby z domyślnego klucza produkcyjnego (lub fałszywego), zamiast zgłosić błąd konfiguracji.
+- **Jest (Wdrożone rozwiązanie):** Zastosowano bezpieczną logikę środowiskową w `components/Contact.tsx`:
+  ```typescript
+  // Klucz testowy w dev, w produkcji klucz z env (wbijany w czasie buildu)
+  const SITE_KEY =
+    process.env.NODE_ENV === "development"
+      ? "1x00000000000000000000AA"
+      : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
 ### 9. Nieużywana zależność `@marsidev/react-turnstile` + literówka w `turnstile.d.ts`
 
