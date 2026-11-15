@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -15,6 +15,7 @@ const navItems = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,11 +27,13 @@ export default function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) setMobileMenuOpen(false);
+      if (window.innerWidth >= 768 && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
@@ -39,6 +42,7 @@ export default function Header() {
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
           setMobileMenuOpen(false);
+          menuButtonRef.current?.focus();
         }
       };
 
@@ -47,12 +51,23 @@ export default function Header() {
         document.body.style.overflow = "";
         window.removeEventListener("keydown", handleKeyDown);
       };
+    } else {
+      // Zapewnienie powrotu fokusu na przycisk toggle przy zamknięciu menu
+      menuButtonRef.current?.focus();
     }
 
     return () => {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  const handleToggleMenu = () => {
+    const nextState = !mobileMenuOpen;
+    setMobileMenuOpen(nextState);
+    if (!nextState) {
+      menuButtonRef.current?.focus();
+    }
+  };
 
   return (
     <header
@@ -92,7 +107,8 @@ export default function Header() {
 
         {/* Mobile Toggle */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          ref={menuButtonRef}
+          onClick={handleToggleMenu}
           className="md:hidden text-neutral-300 hover:text-white p-2 shrink-0 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none rounded"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
@@ -119,7 +135,10 @@ export default function Header() {
           <Link
             key={item.name}
             href={item.href}
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={() => {
+              setMobileMenuOpen(false);
+              menuButtonRef.current?.focus();
+            }}
             className="block text-sm uppercase tracking-widest text-neutral-300 hover:text-brand"
           >
             {item.name}
