@@ -165,13 +165,14 @@ Dodatkowo:
 
 ### 9. Nieużywana zależność `@marsidev/react-turnstile` + literówka w `turnstile.d.ts`
 
-**Status:** ⏸️ ODŁOŻONE (decyzja PO)
+**Status:** ✅ NAPRAWIONE I ZAMKNIĘTE
 
-**Do zrobienia:**
-
-- Usunąć paczkę i `turnstile.d.ts` albo przejść na oficjalny komponent biblioteki (obecnie ręczny `<Script>` + `window.turnstile`).
-
-**Uwaga:** `Contact.tsx` sam deklaruje `Window.turnstile` (`declare global`), więc `turnstile.d.ts` może być zdublowany.
+- **Było:** Projekt zawierał nieużywaną zewnętrzną paczkę `@marsidev/react-turnstile` oraz zbędny plik typów `turnstile.d.ts`, podczas gdy `Contact.tsx` korzysta z własnej, natywnej implementacji opartej na `<Script>` i `window.turnstile`.
+- **Jest (Wdrożone rozwiązanie):** 
+  - Odinstalowano zbędną paczkę (`npm uninstall @marsidev/react-turnstile`).
+  - Usunięto nieużywany plik `turnstile.d.ts`.
+  - Zaktualizowano dokumentację bezpieczeństwa (`SECURITY.MD`).
+- **Efekt:** Uporządkowanie zależności w `package.json` i `package-lock.json`, usunięcie martwego kodu oraz pełna spójność typu środowiska w TypeScript.
 
 ### 10. Duplikacja modelu portfolio (`projects.json` vs hardcode w `Portfolio.tsx`)
 
