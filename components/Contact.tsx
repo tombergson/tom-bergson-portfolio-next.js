@@ -12,14 +12,20 @@ declare global {
       render: (container: HTMLElement | string, options: {
         sitekey: string;
         callback: (token: string) => void;
-        "error-callback"?: () => void;
+        "error-callback"?: (errorCode?: string) => void;
         "expired-callback"?: () => void;
         theme?: "light" | "dark" | "auto";
       }) => string;
-      reset: (widgetId: string) => void;
+      reset: (widgetId?: string) => void;
     };
   }
 }
+
+// Klucz testowy w dev, w produkcji klucz z env (wbijany w czasie buildu)
+const SITE_KEY =
+  process.env.NODE_ENV === "development"
+    ? "1x00000000000000000000AA"
+    : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACcliHJZbwCxdXeb";
 
 export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -31,27 +37,41 @@ export default function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-  
+
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [widgetError, setWidgetError] = useState<string | null>(null);
   const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
   const decodedEmail = "studio@tombergson.eu";
 
-  const renderTurnstile = () => {
-    if (window.turnstile && turnstileRef.current && !turnstileRef.current.hasChildNodes()) {
-      // Automatyczny wybór klucza testowego dla localhost / dev oraz produkcyjnego dla live
-      const isDev = process.env.NODE_ENV === "development";
-      const siteKey = isDev ? "1x00000000000000000000AA" : (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACcliHJZbwCxdXeb");
-
-      window.turnstile.render(turnstileRef.current, {
-        sitekey: siteKey,
-        callback: (token: string) => {
-          setTurnstileToken(token);
-        },
-        "error-callback": () => setTurnstileToken(""),
-        "expired-callback": () => setTurnstileToken(""),
-        theme: "dark",
-      });
+  const resetTurnstile = () => {
+    if (window.turnstile && widgetIdRef.current) {
+      window.turnstile.reset(widgetIdRef.current);
     }
+    setTurnstileToken("");
+  };
+
+  const renderTurnstile = () => {
+    if (!window.turnstile || !turnstileRef.current || turnstileRef.current.hasChildNodes()) {
+      return;
+    }
+
+    widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+      sitekey: SITE_KEY,
+      callback: (token: string) => {
+        setWidgetError(null);
+        setTurnstileToken(token);
+      },
+      "error-callback": (errorCode?: string) => {
+        console.error("TURNSTILE_WIDGET_ERROR:", errorCode);
+        setTurnstileToken("");
+        setWidgetError(
+          `Nie udało się załadować weryfikacji CAPTCHA${errorCode ? ` (kod ${errorCode})` : ""}. Odśwież stronę lub spróbuj później.`
+        );
+      },
+      "expired-callback": () => setTurnstileToken(""),
+      theme: "dark",
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -78,6 +98,7 @@ export default function Contact() {
     }
 
     if (!turnstileToken) {
+      setStatus("error");
       setErrorMessage("Proszę ukończyć weryfikację bezpieczeństwa (CAPTCHA).");
       return;
     }
@@ -94,12 +115,11 @@ export default function Contact() {
         }),
       });
 
-      const result = await res.json();
+      const result = await res.json().catch(() => ({}));
 
       if (res.ok && result.success) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
-        setTurnstileToken("");
       } else {
         setStatus("error");
         setErrorMessage(result.message || "Wystąpił problem z wysyłką.");
@@ -107,6 +127,9 @@ export default function Contact() {
     } catch {
       setStatus("error");
       setErrorMessage("Wystąpił błąd sieci. Spróbuj ponownie później.");
+    } finally {
+      // Token jest jednorazowy: po każdej próbie wymuszamy nowy
+      resetTurnstile();
     }
   };
 
@@ -114,7 +137,7 @@ export default function Contact() {
     <section id="contact" className="py-20 bg-[#080808] relative border-b border-neutral-900/60 overflow-hidden">
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-        onLoad={renderTurnstile}
+        onReady={renderTurnstile}
         strategy="lazyOnload"
       />
 
@@ -234,6 +257,7 @@ export default function Contact() {
                     id="name"
                     value={formData.name}
                     onChange={handleChange}
+                    maxLength={100}
                     placeholder="Your Name"
                     className={`w-full bg-neutral-900/80 border rounded-md px-4 py-2.5 text-sm text-neutral-200 placeholder-neutral-600 focus:outline-none transition-colors duration-200 ${
                       fieldErrors.name ? "border-red-500" : "border-neutral-800/80 focus:border-red-500"
@@ -253,6 +277,7 @@ export default function Contact() {
                     id="email"
                     value={formData.email}
                     onChange={handleChange}
+                    maxLength={254}
                     placeholder="your.email@example.com"
                     className={`w-full bg-neutral-900/80 border rounded-md px-4 py-2.5 text-sm text-neutral-200 placeholder-neutral-600 focus:outline-none transition-colors duration-200 ${
                       fieldErrors.email ? "border-red-500" : "border-neutral-800/80 focus:border-red-500"
@@ -273,6 +298,7 @@ export default function Contact() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
+                  maxLength={5000}
                   placeholder="How can I help you?"
                   className={`w-full bg-neutral-900/80 border rounded-md px-4 py-3 text-sm text-neutral-200 placeholder-neutral-600 focus:outline-none transition-colors duration-200 resize-none ${
                     fieldErrors.message ? "border-red-500" : "border-neutral-800/80 focus:border-red-500"
@@ -285,6 +311,9 @@ export default function Contact() {
 
               <div className="py-2">
                 <div ref={turnstileRef} />
+                {widgetError && (
+                  <p className="mt-2 text-xs text-red-500 font-mono">{widgetError}</p>
+                )}
               </div>
 
               {status === "success" && (

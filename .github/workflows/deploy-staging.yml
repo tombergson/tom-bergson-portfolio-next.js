@@ -22,6 +22,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm security audit
+        run: |
+          echo "Przeprowadzanie audytu zależności npm..."
+          npm audit --audit-level=high || (echo "❌ Wykryto krytyczne podatności w zależnościach npm!" && exit 1)
+
       - name: Prepare tags
         id: vars
         run: |
@@ -42,8 +56,6 @@ jobs:
           username: tombergson
           password: ${{ secrets.GITLAB_TOKEN }}
 
-      # Jeden build: przetestowany obraz jest dokładnie tym, który trafia do rejestrów.
-      # pull: true wymusza świeży obraz bazowy node:24-alpine (bez starego cache z runnera).
       - name: Build image locally
         uses: docker/build-push-action@v6
         with:
@@ -103,7 +115,6 @@ jobs:
       - name: Push image copy to GitLab Registry
         run: docker push registry.gitlab.com/${{ env.IMAGE_NAME }}:staging
 
-      # staging = źródło prawdy: dev i main na GitLabie są wyrównywane do tego samego commita
       - name: Push code mirror to GitLab (staging, dev, main aligned to staging)
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
