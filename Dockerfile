@@ -12,7 +12,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# --- [PUNKT 8] Odbieranie klucza Turnstile jako ARG i ustawienie jako ENV przed buildem ---
+# Pobranie klucza przekazanego z GitHub Actions (build-args)
 ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
