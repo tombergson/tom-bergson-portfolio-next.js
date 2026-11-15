@@ -18,7 +18,7 @@
 | Kategoria | Znaleziska | Stan aktualny |
 |---|---:|---|
 | **KRYTYCZNE** | 4 | ✅ 4/4 wdrożone |
-| **WAŻNE** | 14 | ✅ 10 w pełni, 🔶 1 częściowo, ⚠️ 4 otwarte (9, 10, 17, 18) |
+| **WAŻNE** | 14 | ✅ 12 w pełni, 🔶 1 częściowo, ⚠️ 2 otwarte (10, 18) |
 | **DO ROZWAŻENIA** | 6 | ✅ 5 w pełni (19, 21, 22, 23, 24), 📋 1 w backlogu (20) |
 | **NOWE (sesja 15.11.2026)** | 7 | ✅ wdrożone (25–31) |
 
@@ -217,10 +217,11 @@ Dodatkowo:
 
 ### 17. Social links — 3× skopiowany markup
 
-**Status:** ⚠️ NIEDOKOŃCZONE
+**Status:** ✅ NAPRAWIONE I ZAMKNIĘTE
 
-- W `Contact.tsx` nadal trzy skopiowane `<a>` (Instagram, Facebook, YouTube).
-- **Do zrobienia:** tablica `socialLinks[]` + `.map()` jak w `navItems` / `TechStrip`.
+- **Było:** W pliku `components/Contact.tsx` markup przycisków mediów społecznościowych (Instagram, Facebook, YouTube) był trzykrotnie skopiowany w postaci osobnych tagów `<a>`.
+- **Jest (Wdrożone rozwiązanie):** Wydzielono statyczną tablicę `socialLinks` zawierającą obiekty z `name` oraz `href`, a następnie wyrenderowano je dynamicznie przy użyciu metody `.map()`, zachowując pełną spójność stylów i interakcji.
+- **Efekt:** DRY (Don't Repeat Yourself), czystszy kod JSX oraz łatwiejsza rozbudowa o kolejne platformy w przyszłości.
 
 ### 18. `unoptimized` na obrazie w modalu Portfolio
 

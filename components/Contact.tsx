@@ -27,6 +27,12 @@ const SITE_KEY =
     ? "1x00000000000000000000AA"
     : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
+const socialLinks = [
+  { name: "Instagram", href: "https://www.instagram.com/tombergsondesign/" },
+  { name: "Facebook", href: "https://www.facebook.com/tombergson.eu/" },
+  { name: "YouTube", href: "https://www.youtube.com/@TomBergson" },
+];
+
 export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -210,33 +216,18 @@ export default function Contact() {
                 Follow Me
               </h4>
               <div className="flex flex-wrap gap-2">
-                <a
-                  href="https://www.instagram.com/tombergsondesign/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
-                >
-                  <span>Instagram</span>
-                  <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-red-500 transition-colors" />
-                </a>
-                <a
-                  href="https://www.facebook.com/tombergson.eu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
-                >
-                  <span>Facebook</span>
-                  <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-red-500 transition-colors" />
-                </a>
-                <a
-                  href="https://www.youtube.com/@TomBergson"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
-                >
-                  <span>Youtube</span>
-                  <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-red-500 transition-colors" />
-                </a>
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-neutral-900/80 hover:bg-neutral-800/90 border border-neutral-800/80 hover:border-red-500/50 text-neutral-300 hover:text-white text-xs font-medium transition-all duration-200 group backdrop-blur-sm"
+                  >
+                    <span>{link.name}</span>
+                    <ArrowUpRight className="w-3 h-3 text-neutral-500 group-hover:text-red-500 transition-colors" />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
