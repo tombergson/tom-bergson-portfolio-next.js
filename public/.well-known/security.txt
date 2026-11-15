@@ -1,4 +1,0 @@
-Contact: mailto:studio@tombergson.eu
-Expires: 2027-11-15T00:00:00.000Z
-Preferred-Languages: pl, en
-Canonical: https://tombergson.eu/.well-known/security.txt
