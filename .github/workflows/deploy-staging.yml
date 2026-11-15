@@ -8,6 +8,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: tombergson/tom-bergson-portfolio-next.js
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
 jobs:
   build-and-push:
@@ -64,7 +65,7 @@ jobs:
           load: true
           pull: true
           build-args: |
-            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY_STAGING }}
+            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ env.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.SHORT_SHA }}
