@@ -14,7 +14,6 @@
     "audit:prod": "npm audit --omit=dev --audit-level=moderate"
   },
   "dependencies": {
-    "@marsidev/react-turnstile": "^1.6.3",
     "lucide-react": "^1.72.0",
     "next": "^16.4.6",
     "react": "^19.3.1",

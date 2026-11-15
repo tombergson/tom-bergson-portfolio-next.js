@@ -18,7 +18,7 @@
 | Kategoria | Znaleziska | Stan aktualny |
 |---|---:|---|
 | **KRYTYCZNE** | 4 | ✅ 4/4 wdrożone |
-| **WAŻNE** | 14 | ✅ 9 w pełni (w tym 30), 🔶 1 częściowo, ⚠️ 3 otwarte (9, 10, 17, 18) |
+| **WAŻNE** | 14 | ✅ 10 w pełni, 🔶 1 częściowo, ⚠️ 4 otwarte (9, 10, 17, 18) |
 | **DO ROZWAŻENIA** | 6 | ✅ 5 w pełni (19, 21, 22, 23, 24), 📋 1 w backlogu (20) |
 | **NOWE (sesja 15.11.2026)** | 7 | ✅ wdrożone (25–31) |
 
