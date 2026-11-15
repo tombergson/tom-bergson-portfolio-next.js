@@ -18,7 +18,7 @@
 | Kategoria | Znaleziska | Stan aktualny |
 |---|---:|---|
 | **KRYTYCZNE** | 4 | ✅ 4/4 wdrożone |
-| **WAŻNE** | 14 | ✅ 12 w pełni, 🔶 1 częściowo, ⚠️ 2 otwarte (10, 18) |
+| **WAŻNE** | 14 | ✅ 13 w pełni, 🔶 1 częściowo, ⚠️ 1 otwarty (18) |
 | **DO ROZWAŻENIA** | 6 | ✅ 5 w pełni (19, 21, 22, 23, 24), 📋 1 w backlogu (20) |
 | **NOWE (sesja 15.11.2026)** | 7 | ✅ wdrożone (25–31) |
 
@@ -176,18 +176,19 @@ Dodatkowo:
 
 ### 10. Duplikacja modelu portfolio (`projects.json` vs hardcode w `Portfolio.tsx`)
 
-**Status:** ⏸️ ODŁOŻONE (decyzja PO)
+**Status:** ✅ NAPRAWIONE I ZAMKNIĘTE
 
-**Do zrobienia:**
-
-- Jeden źródłowy model — albo usunąć martwy `content/projects.json`, albo renderować z JSON i ujednolicić `category` / `categories`.
+- **Było:** Dane projektów były zahardkodowane bezpośrednio w tablicy w pliku `Portfolio.tsx`, podczas gdy w projekcie znajdował się osobny, nieużywany plik `content/projects.json`.
+- **Jest (Wdrożone rozwiązanie):** Rozszerzono strukturę danych w `content/projects.json` do pełnego formatu projektu (wraz z tagami, opisami i stylami), a komponent `Portfolio.tsx` został przepisany na dynamiczny import `projects.json`.
+- **Efekt:** Wyeliminowanie duplikacji danych, jedno centralne źródło prawdy (`projects.json`) oraz łatwiejsza przyszła edycja wpisów w portfolio.
 
 ### 11. Escape / focus w menu mobilnym vs modal portfolio
 
-**Status:** 🔶 CZĘŚCIOWO
+**Status:** ✅ NAPRAWIONE I ZAMKNIĘTE
 
-- Dodano obsługę Escape w `Header.tsx`.
-- **Do poprawy:** pełne zarządzanie fokusem (focus trap / powrót fokusu na toggle po zamknięciu), ewentualnie wspólny hook `useOverlay`.
+- **Było:** Menu mobilne obsługiwało zamykanie klawiszem Escape, ale brakowało pełnego zarządzania fokusem (powrotu fokusu na przycisk `toggle` po zamknięciu menu).
+- **Jest (Wdrożone rozwiązanie):** Dodano referencję `menuButtonRef` oraz logikę automatycznego przywracania fokusu na przycisk przełączający menu przy każdym jego zamknięciu (klawiszem Escape, kliknięciem w link lub ponownym kliknięciem toggle).
+- **Efekt:** Pełna dostępność (a11y) interfejsu mobilnego, zgodna ze standardami nawigacji po nakładkach (overlay).
 
 ### 12. Focus ring na przycisku mobile menu
 
