@@ -9,7 +9,7 @@ const csp = [
   `connect-src 'self' https://challenges.cloudflare.com${isDev ? " ws: wss:" : ""}`,
   "img-src 'self' data: blob:",
   "style-src 'self' 'unsafe-inline'",
-  "font-src 'self' data:", // <--- DODANE 'data:' dla czcionek
+  "font-src 'self' data:",  
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

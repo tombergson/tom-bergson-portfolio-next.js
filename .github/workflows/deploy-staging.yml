@@ -63,6 +63,8 @@ jobs:
           push: false
           load: true
           pull: true
+          build-args: |
+            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY_STAGING }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.SHORT_SHA }}

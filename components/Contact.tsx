@@ -25,7 +25,7 @@ declare global {
 const SITE_KEY =
   process.env.NODE_ENV === "development"
     ? "1x00000000000000000000AA"
-    : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACcliHJZbwCxdXeb";
+    : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
 export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
