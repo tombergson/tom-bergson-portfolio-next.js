@@ -160,17 +160,17 @@ export default function Contact() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="mb-14">
-          <span className="text-red-500 font-mono text-xs tracking-widest uppercase mb-2 block font-semibold">
-            Contact
-          </span>
-          <h3 className="text-2xl md:text-4xl font-semibold text-neutral-100 tracking-tight">
-            Get In Touch
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           <div className="lg:col-span-5 flex flex-col justify-between space-y-10">
+            <div>
+              <span className="text-red-500 font-mono text-xs tracking-widest uppercase mb-2 block font-semibold">
+                Contact
+              </span>
+              <h3 className="text-2xl md:text-4xl font-semibold text-neutral-100 tracking-tight">
+                Get In Touch
+              </h3>
+            </div>
+
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="p-2.5 rounded-lg bg-neutral-900/80 backdrop-blur-md border border-neutral-800/80 text-red-500 shrink-0 mt-1">
@@ -232,7 +232,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-neutral-950/70 backdrop-blur-md border border-neutral-800/80 p-6 md:p-8 rounded-xl shadow-2xl">
+          <div className="lg:col-span-7 lg:mt-6 bg-neutral-950/70 backdrop-blur-md border border-neutral-800/80 p-6 md:p-8 rounded-xl shadow-2xl">
             <h4 className="text-lg font-medium text-neutral-200 mb-6">
               Send me a message
             </h4>
